@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin=""/>
+        <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
+        
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+        <script src="https://kit.fontawesome.com/d29293fced.js" crossorigin="anonymous"></script>
+
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
+
+        <link href="css/leaflet-sidebar.css" rel="stylesheet">
+        <link href="css/leaflet-sidebar.min.css" rel="stylesheet">
+        <script src="js/leaflet-sidebar.js"></script>
+        <script src="js/leaflet-sidebar.min.js"></script>
+
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@drustack/leaflet.resetview/dist/L.Control.ResetView.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/@drustack/leaflet.resetview/dist/L.Control.ResetView.min.js"></script>
+
+        <script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/Leaflet.fullscreen.min.js'></script>
+        <link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/leaflet.fullscreen.css' rel='stylesheet' />
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js" integrity="sha512-QSkVNOCYLtj73J4hbmVoOV6KVZuMluZlioC+trLpewV8qMjsWqlIQvkn1KGX2StWvPMdWGBqim1xlC8krl1EKQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.js" integrity="sha512-Lii3WMtgA0C0qmmkdCpsG0Gjr6M0ajRyQRQSbTF6BsrVh/nhZdHpVZ76iMIPvQwz1eoXC3DmAg9K51qT5/dEVg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+        <script src="js/Leaflet.control.custom.js"></script>
+
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>MAGEODATA | Enseignement Scolaire</title>
+        <link href="img/favicon.png" rel="icon">
+
+    </head>
+    
+    <body style="margin: 0">
+        <div id="map" style="width: 100%; height: 660px;"></div>
+
+        <script>
+            var map = L.map('map').setView([29.2, -9], 6);
+                L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png', {
+                    attribution: '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
+                }).addTo(map);
+
+                L.control.resetView({
+                    position: "topleft",
+                    title: "Réinitialiser la vue",
+                    latlng: L.latLng([29.2, -14.2]),
+                    zoom: 6,
+                }).addTo(map);
+
+                map.addControl(new L.Control.Fullscreen({
+                    title: {
+                        'false': 'Voir en plein écran',
+                        'true': 'Quitter le mode plein écran'
+                    }
+                }));
+
+                L.control.custom({
+                    position: 'topright',
+                    content : '<button type="button" class="btn btn-default">'+
+                            '<i class="fa-solid fa-arrow-left"></i>'+
+                            '</button>',
+                    classes : 'btn-group-vertical btn-group-sm',
+                    style   :
+                    {
+                        margin: '10px',
+                        padding: '0px 0 0 0',
+                        cursor: 'pointer'
+                    },
+                    events:
+                        {
+                            click: function(data) {
+                            event.preventDefault(); 
+                            location.replace('index');
+                        }
+                    }
+                }).addTo(map);
+
+                L.control.scale().addTo(map);
+
+                var geojson = '<%-data%>';
+                var educ = JSON.parse(geojson);
+                var regions = JSON.parse('<%-regions%>');
+
+                L.geoJSON(regions, {
+                    style: areaStyle
+                }).addTo(map)
+
+                function areaStyle(){
+                    return {
+                        fillColor: 'white',
+                        weight: 0.8,
+                        opacity: 0.7,
+                        color: 'grey',
+                        fillOpacity: 0.3
+                    }
+                }
+
+                function highlightFeature(e) {
+                    var layer = e.target;
+                    layer.setStyle({
+                        weight: 3,
+                        color: '#666',
+                        dashArray: '',
+                        fillOpacity: 0.7
+                    });
+                    if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
+                        layer.bringToFront();
+                    }
+                        info.update(layer.feature);
+                }
+
+                function resetHighlight(e) {
+                    geojsonLayer.resetStyle(e.target);
+                    info.update();
+                }
+
+                function onEachFeature(feature, layer) {
+                    layer.on({
+                        mouseover: highlightFeature,
+                        mouseout: resetHighlight
+                    });
+                }
+
+                geojsonLayer = L.geoJSON(educ, {pointToLayer: function(feature,latlng) {
+                    return L.circleMarker(latlng, {
+                        weight: 1,
+                        color: 'grey',
+                        fillColor: '#2E86C1',
+                        fillOpacity: 0.8,
+                        radius: getRadius(feature.education[0].etablissements_prives, 1.2)
+                    });   
+                    },
+                        onEachFeature : onEachFeature
+                    }
+                );
+
+                geojsonLayer.addTo(map);
+
+                var legend = L.control({position: 'bottomright'});
+                createLegend(100,1000, 1.2);
+
+                function getRadius(area, scale) {
+                    var radius = Math.sqrt(area/Math.PI);
+                    return radius * scale;
+                }
+
+                var sidebar = L.control.sidebar({
+                    autopan: true,      
+                    closeButton: true,   
+                    container: 'sidebar', 
+                    position: 'left'
+                }).addTo(map);
+
+                sidebar.addPanel({
+                        id:   'info',
+                        tab:  '<i class="fa-solid fa-circle-info"></i>',
+                        title: 'Enseignement Scolaire',
+                        pane: '<p style="margin-top: 20px; font-size: 15px; font-weight: bold">Données ouvertes dans le domaine de l\'éducation<p/>'+
+                            '<div class="card" style="width: 375px; font-size: 14px">'+
+                                '<ul class="list-group list-group-flush">'+
+                                    '<li class="list-group-item" id="prives"><a href="#" class="card-link">Établissements scolaires privés</a></li>'+
+                                    '<li class="list-group-item" id="publics"><a href="#">Établissements scolaires publics</a></li>'+
+                                    '<li class="list-group-item" id="qualifiants"><a href="#">Établissements publics qualifiants</a></li>'+
+                                    '<li class="list-group-item" id="colleges"><a href="#">Établissements publics collégiaux</a></li>'+
+                                    '<li class="list-group-item" id="primaires"><a href="#">Établissements publics primaires</a></li>'+
+                                '</ul>'+
+                            '</div>'+
+                            '<p style="font-size: 12px;">Source de données : <a href="https://data.gov.ma/data/fr/group/education">data.gov.ma</a></p>'+
+                            
+                            '<div id="prives-infos" class="card" style="width: 375px; display:block; margin-top: 30px">'+
+                                '<div class="card-body">'+
+                                    '<h4 class="card-title">Établissements scolaires privés</h4>'+
+                                    '<h5 class="card-subtitle mb-2 text-muted">Nombre des établissements scolaires privés par région</h6>'+
+                                    '<p class="card-text">Données ouvertes du Ministère de l’Education Nationale, du Préscolaire et des Sports.</p>'+
+                                    '<a style="font-size: 15px; color: green" href="https://data.gov.ma/data/fr/dataset/liste-des-Établissements-prives-2021/resource/4f6dd560-bad6-4418-b5e8-73ca57811b13"><i class="fa-solid fa-file-excel"></i><span class="card-text" style="font-size:10px; margin-left: 7px; color: blue">Voir la liste des établissements sur le Portail National de l\'Open Data</span></a>'+
+                                '</div>'+
+                            '</div>'+
+
+                            '<div id="publics-infos" class="card" style="width: 375px; display:none; margin-top: 30px">'+
+                                '<div class="card-body">'+
+                                    '<h4 class="card-title">Établissements scolaires publics</h4>'+
+                                    '<h5 class="card-subtitle mb-2 text-muted">Nombre des établissements scolaires publics par région</h6>'+
+                                    '<p class="card-text">Données ouvertes du Ministère de l’Education Nationale, du Préscolaire et des Sports.</p>'+
+                                    '<a style="font-size: 15px; color: green" href="https://data.gov.ma/data/fr/dataset/liste-des-Établissements-scolaires-publics/resource/34a1382d-ebaf-44a5-989f-86c58800a811"><i class="fa-solid fa-file-excel"></i><span class="card-text" style="font-size:10px; margin-left: 7px; color: blue">Voir la liste des établissements sur le Portail National de l\'Open Data</span></a>'+
+                                '</div>'+
+                            '</div>'+
+
+                            '<div id="qualifiants-infos" class="card" style="width: 375px; display:none; margin-top: 30px">'+
+                                '<div class="card-body">'+
+                                    '<h4 class="card-title">Établissements publics qualifiants</h4>'+
+                                    '<h5 class="card-subtitle mb-2 text-muted">Nombre des établissements publics qualifiants par région</h6>'+
+                                    '<p class="card-text">Données ouvertes du Ministère de l’Education Nationale, du Préscolaire et des Sports.</p>'+
+                                    '<a style="font-size: 15px; color: green" href="https://data.gov.ma/data/fr/dataset/liste-des-Établissements-publics-qualifiants"><i class="fa-solid fa-file-excel"></i><span class="card-text" style="font-size:10px; margin-left: 7px; color: blue">Voir la liste des établissements sur le Portail National de l\'Open Data</span></a>'+
+                                '</div>'+
+                            '</div>'+
+
+                            '<div id="colleges-infos" class="card" style="width: 375px; display:none; margin-top: 30px">'+
+                                '<div class="card-body">'+
+                                    '<h4 class="card-title">Établissements publics collégiaux</h4>'+
+                                    '<h5 class="card-subtitle mb-2 text-muted">Nombre des établissements publics collégiaux par région</h6>'+
+                                    '<p class="card-text">Données ouvertes du Ministère de l’Education Nationale, du Préscolaire et des Sports.</p>'+
+                                    '<a style="font-size: 15px; color: green" href="https://data.gov.ma/data/fr/dataset/liste-de-Établissements-publics-collegial/resource/445627e2-b1ba-48f5-95ec-7e3aa9a1570f"><i class="fa-solid fa-file-excel"></i><span class="card-text" style="font-size:10px; margin-left: 7px; color: blue">Voir la liste des établissements sur le Portail National de l\'Open Data</span></a>'+
+                                '</div>'+
+                            '</div>'+
+
+                            '<div id="primaires-infos" class="card" style="width: 375px; display:none; margin-top: 30px">'+
+                                '<div class="card-body">'+
+                                    '<h4 class="card-title">Établissements publics primaires</h4>'+
+                                    '<h5 class="card-subtitle mb-2 text-muted">Nombre des établissements publics primaires par région</h6>'+
+                                    '<p class="card-text">Données ouvertes du Ministère de l’Education Nationale, du Préscolaire et des Sports.</p>'+
+                                    '<a style="font-size: 15px; color: green" href="https://data.gov.ma/data/fr/dataset/liste-des-Établissements-publics-primaire/resource/f1ac441c-01e5-4a63-ab3a-e45a930b9a07"><i class="fa-solid fa-file-excel"></i><span class="card-text" style="font-size:10px; margin-left: 7px; color: blue">Voir la liste des établissements sur le Portail National de l\'Open Data</span></a>'+
+                                '</div>'+
+                            '</div>'
+                    })
+                
+                sidebar.open('info');
+
+                var grades = Array();
+
+                var info = L.control({position : 'bottomright'});
+                info.onAdd = function (map) {
+                    this._div = L.DomUtil.create('div', 'info');
+                    this.update();
+                    return this._div;
+                };
+                info.update = function (props) {
+                    this._div.innerHTML = '<h4>Établissements privés par région</h4>' + (props ?
+                        'Région : <b>'+ props.properties.Nom_Region + ' </b><br />Établissements privés : ' + props.education[0].etablissements_prives
+                        : 'Merci de mettre le curseur sur une région');
+                };
+                info.addTo(map);
+
+                $("#prives").click(function(id) {
+                    $('#prives-infos').show();
+                    $('#publics-infos').hide();
+                    $('#qualifiants-infos').hide();
+                    $('#colleges-infos').hide();
+                    $('#primaires-infos').hide();
+
+                    map.removeLayer(geojsonLayer);
+                    geojsonLayer = L.geoJSON(educ, {pointToLayer: function(feature,latlng) {
+                        return L.circleMarker(latlng, {
+                            weight: 1,
+                            color: 'grey',
+                            fillColor: '#2E86C1',
+                            fillOpacity: 0.8,
+                            radius: getRadius(feature.education[0].etablissements_prives, 1.2)
+                        });   
+                        },
+                            onEachFeature : onEachFeature
+                        }
+                    );
+                    map.addLayer(geojsonLayer);
+
+                    legend.remove(map);
+                    createLegend(100,1000, 1.2);
+
+                    info.remove(map);
+                    info.onAdd = function (map) {
+                        this._div = L.DomUtil.create('div', 'info');
+                        this.update();
+                        return this._div;
+                    };
+                    info.update = function (props) {
+                        this._div.innerHTML = '<h4>Établissements privés par région</h4>' + (props ?
+                            'Région : <b>'+ props.properties.Nom_Region + ' </b><br />Établissements privés : ' + props.education[0].etablissements_prives
+                            : 'Merci de mettre le curseur sur une région');
+                    };
+                    info.addTo(map);
+
+                });
+
+                $("#publics").click(function(id) {
+                    $('#prives-infos').hide();
+                    $('#publics-infos').show();
+                    $('#qualifiants-infos').hide();
+                    $('#colleges-infos').hide();
+                    $('#primaires-infos').hide();
+
+                    map.removeLayer(geojsonLayer);
+                    geojsonLayer = L.geoJSON(educ, {pointToLayer: function(feature,latlng) {
+                        return L.circleMarker(latlng, {
+                            weight: 1,
+                            color: 'grey',
+                            fillColor: '#16A085',
+                            fillOpacity: 0.8,
+                            radius: getRadius(feature.education[0].etablissement_publics, 1)
+                        });   
+                        },
+                            onEachFeature : onEachFeature
+                        }
+                    );
+                    map.addLayer(geojsonLayer);
+
+                    legend.remove(map);
+                    createLegend(200,2000, 1);
+
+                    info.remove(map);
+                    info.onAdd = function (map) {
+                        this._div = L.DomUtil.create('div', 'info');
+                        this.update();
+                        return this._div;
+                    };
+                    info.update = function (props) {
+                        this._div.innerHTML = '<h4>Établissements publics par région</h4>' + (props ?
+                            'Région : <b>'+ props.properties.Nom_Region + ' </b><br />Établissements publics : ' + props.education[0].etablissement_publics
+                            : 'Merci de mettre le curseur sur une région');
+                    };
+                    info.addTo(map);
+                });
+
+                $("#qualifiants").click(function(id) {
+                    $('#prives-infos').hide();
+                    $('#publics-infos').hide();
+                    $('#qualifiants-infos').show();
+                    $('#colleges-infos').hide();
+                    $('#primaires-infos').hide();
+
+                    map.removeLayer(geojsonLayer);
+                    geojsonLayer = L.geoJSON(educ, {pointToLayer: function(feature,latlng) {
+                        return L.circleMarker(latlng, {
+                            weight: 1,
+                            color: 'grey',
+                            fillColor: '#CB4335',
+                            fillOpacity: 0.8,
+                            radius: getRadius(feature.education[0].qualifiant_publics, 2.7)
+                        });   
+                        },
+                            onEachFeature : onEachFeature
+                        }
+                    );
+                    map.addLayer(geojsonLayer);
+
+                    legend.remove(map);
+                    createLegend(50,300, 2.7);
+
+                    info.remove(map);
+                    info.onAdd = function (map) {
+                        this._div = L.DomUtil.create('div', 'info');
+                        this.update();
+                        return this._div;
+                    };
+                    info.update = function (props) {
+                        this._div.innerHTML = '<h4>Établissements publics qualifiants par région</h4>' + (props ?
+                            'Région : <b>'+ props.properties.Nom_Region + ' </b><br />Établissements publics qualifiants : ' + props.education[0].qualifiant_publics
+                            : 'Merci de mettre le curseur sur une région');
+                    };
+                    info.addTo(map);
+                });
+
+                $("#colleges").click(function(id) {
+                    $('#prives-infos').hide();
+                    $('#publics-infos').hide();
+                    $('#qualifiants-infos').hide();
+                    $('#colleges-infos').show();
+                    $('#primaires-infos').hide();
+
+                    map.removeLayer(geojsonLayer);
+                    geojsonLayer = L.geoJSON(educ, {pointToLayer: function(feature,latlng) {
+                        return L.circleMarker(latlng, {
+                            weight: 1,
+                            color: 'grey',
+                            fillColor: '#A569BD',
+                            fillOpacity: 0.8,
+                            radius: getRadius(feature.education[0].college_publics, 2)
+                        });   
+                        },
+                            onEachFeature : onEachFeature
+                        }
+                    );
+                    map.addLayer(geojsonLayer);
+
+                    legend.remove(map);
+                    createLegend(50,400, 2);
+
+                    info.remove(map);
+                    info.onAdd = function (map) {
+                        this._div = L.DomUtil.create('div', 'info');
+                        this.update();
+                        return this._div;
+                    };
+                    info.update = function (props) {
+                        this._div.innerHTML = '<h4>Établissements publics collégiaux par région</h4>' + (props ?
+                            'Région : <b>'+ props.properties.Nom_Region + ' </b><br />Établissements publics collégiaux : ' + props.education[0].college_publics
+                            : 'Merci de mettre le curseur sur une région');
+                    };
+                    info.addTo(map);
+                });
+
+                $("#primaires").click(function(id) {
+                    $('#prives-infos').hide();
+                    $('#publics-infos').hide();
+                    $('#qualifiants-infos').hide();
+                    $('#colleges-infos').hide();
+                    $('#primaires-infos').show();
+
+                    map.removeLayer(geojsonLayer);
+                    geojsonLayer = L.geoJSON(educ, {pointToLayer: function(feature,latlng) {
+                        return L.circleMarker(latlng, {
+                            weight: 1,
+                            color: 'grey',
+                            fillColor: '#F39C12',
+                            fillOpacity: 0.8,
+                            radius: getRadius(feature.education[0].primaire_publics, 1.1)
+                        });   
+                        },
+                            onEachFeature : onEachFeature
+                        }
+                    );
+                    map.addLayer(geojsonLayer);
+
+                    legend.remove(map);
+                    createLegend(100,1200, 1.1);
+
+                    info.remove(map);
+                    info.onAdd = function (map) {
+                        this._div = L.DomUtil.create('div', 'info');
+                        this.update();
+                        return this._div;
+                    };
+                    info.update = function (props) {
+                        this._div.innerHTML = '<h4>Établissements publics primaires par région</h4>' + (props ?
+                            'Région : <b>'+ props.properties.Nom_Region + ' </b><br />Établissements publics primaires : ' + props.education[0].primaire_publics
+                            : 'Merci de mettre le curseur sur une région');
+                    };
+                    info.addTo(map);
+                });
+
+
+                function createLegend(min, max, scale) {
+                    function roundNumber(inNumber) {
+                        return (Math.round(inNumber/10) * 10);
+                    }
+                    legend.onAdd = function() {
+                        let legendContainer = L.DomUtil.create('div', 'legend');
+                        let symbolsContainer = L.DomUtil.create('div', 'symbolsContainer');
+                        let classes = [roundNumber(min), roundNumber((max-min)/2), roundNumber(max)];
+                        let legendCircle;
+                        let lastRadius = 0;
+                        let currentRadius;
+                        let margin;
+
+                        L.DomEvent.disableClickPropagation(legendContainer);
+
+                        for (let i = 0; i<= classes.length - 1; i++) {
+                            legendCircle = L.DomUtil.create('div', 'legendCircle');
+                            currentRadius = getRadius(classes[i], scale);
+                            margin = -currentRadius - lastRadius - 2;
+                            $(legendCircle).attr("style",
+                                "width: " + (currentRadius * 2) + "px; " + 
+                                "height: " + (currentRadius * 2) + "px; " +
+                                "margin-left: " + margin + "px");
+
+                            $(legendCircle).append("<span class='legendValue'>" + classes[i] + ' <b></b>' +"</span>");
+                            $(symbolsContainer).append(legendCircle);
+                            lastRadius = currentRadius;
+                        }
+                        $(legendContainer).append(symbolsContainer);
+                        return legendContainer;
+                    };
+                    legend.addTo(map);
+                }
+        
+                sidebar.addPanel({
+                        id:   'charts',
+                        tab:  '<i class="fa-solid fa-chart-line"></i>',
+                        title: 'Habitat',
+                        pane: '<p style="margin-top: 20px; font-size: 15px; font-weight: bold">Établissements d\'enseignement scolaire<p/>'+
+                            '<canvas id="chart1" style="display: block" width="400" height="400"></canvas>'+
+                            '<canvas id="chart2" style="display: block" width="400" height="400"></canvas>'
+                });
+        </script>
+
+        <style>
+            .legend, .temporal-legend {
+   		        padding: 6px 10px;
+   		        background: white;
+    		    background: rgba(255,255,255,0.8);
+    		    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+   		        border-radius: 5px;
+                width: 130px
+        	}
+        	.symbolsContainer {
+            	float: left;
+                margin-left: 40px;
+        	}
+        	.legendCircle {
+             	border-radius:50%; 
+             	border: 2px solid #777; 
+        	 	display: inline-block;
+        	}
+        	.legendValue {
+            		position: absolute;
+                    font-size: 12px;
+            		right: 8px;
+        	}
+            .info {
+				padding: 8px 10px;
+				font: 14px/20px Arial, Helvetica, sans-serif;
+				background: white;
+				background: rgba(255,255,255,0.8);
+				box-shadow: 0 0 15px rgba(0,0,0,0.2);
+				border-radius: 5px;
+			}
+			.info h4 {
+				margin: 0 0 5px;
+				color: #777;
+			}
+        </style>
+
+        <script>
+            const ctx1 = document.getElementById('chart1').getContext('2d');
+            const ctx2 = document.getElementById('chart2').getContext('2d');
+
+            var chart1 = new Chart(ctx1, {
+                type: 'pie',
+                data: {
+                    labels: ['Établissements scolaires privés','Établissements scolaires publics'],
+                    datasets: [
+                        {
+                            data: [5634,11076],
+                            backgroundColor: ["#2E86C1","#16A085"]
+                        }
+                    ]
+                }
+            });
+
+            var chart2 = new Chart(ctx2, {
+                type: 'bar',
+                data: {
+                    labels: ['Lycées publics','Collèges publics','Écoles primaires publics'],
+                    datasets: [
+                        {
+                            label: '',
+                            data: [1188,2122,7766],
+                            backgroundColor: ["#CB4335","#A569BD","#F39C12"],
+                            barThickness: 50
+                        }
+                    ]
+                }
+            });
+        </script>
+    </body>
+</html>
