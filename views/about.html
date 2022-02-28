@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 
   <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
   
-    <title>MAGEODATA | A propos</title>
+    <title>MAGEODATA | À propos</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
   
@@ -24,6 +24,8 @@
   
     <link href="css/style.css" rel="stylesheet">
   
+    <script src="https://kit.fontawesome.com/d29293fced.js" crossorigin="anonymous"></script>
+  
   </head>
 
 <body>
@@ -32,22 +34,26 @@
     <div class="container d-flex justify-content-between align-items-center">
 
       <div class="logo">
-        <a href="index.html"><img src="img/logo.png" alt="" class="img-fluid"></a>
+        <a href="index"><img src="img/logo.png" alt="" class="img-fluid"></a>
       </div>
 
       <nav id="navbar" class="navbar">
         <ul>
           <li><a href="index">Accueil</a></li>
           <li class="dropdown"><a href="#"><span>Thèmes</span> <i class="bi bi-chevron-down"></i></a>
-            <ul style="width: 120px;">
-              <li><a href="#">Éducation</a></li>
-              <!-- <li class="dropdown"><a href="#"><span>Société</span> <i class="bi bi-chevron-right"></i></a></li> -->
-              <li><a href="#">Habitat</a></li>
-              <li><a href="#">Société</a></li>
-              <li><a href="#">Géographie</a></li>
+            <ul>
+              <li class="dropdown"><a href="#"><span>Éducation</span> <i class="bi bi-chevron-down"></i></a>
+                <ul>
+                  <li><a href="scolaire">Enseignement Scolaire</a></li>
+                  <li><a href="superieur">Enseignement Supérieur</a></li>
+                </ul>
+              </li>
+              <li><a href="habitat">Habitat</a></li>
+              <li><a href="demographie">Démographie</a></li>
+              <li><a href="topographie">Topographie</a></li>
             </ul>
           </li>
-          <li><a href="about">Source de données</a></li>
+          <li><a href="resource">Source de données</a></li>
           <li><a class="active" href="about">À propos</a></li>
           <li><a href="contact">Contactez-nous</a></li>
         </ul>
@@ -55,188 +61,221 @@
       </nav>
 
     </div>
-  </header><!-- End Header -->
+  </header>
 
   <main id="main">
 
-    <!-- ======= About Us Section ======= -->
     <section class="breadcrumbs">
       <div class="container">
 
         <div class="d-flex justify-content-between align-items-center">
-          <h2>About Us</h2>
+          <h2>À propos de nous</h2>
           <ol>
-            <li><a href="index.html">Home</a></li>
-            <li>About Us</li>
+            <li><a href="index">Accueil</a></li>
+            <li>À propos</li>
           </ol>
         </div>
 
       </div>
-    </section><!-- End About Us Section -->
+    </section>
 
-    <!-- ======= About Section ======= -->
     <section class="about" data-aos="fade-up">
       <div class="container">
 
         <div class="row">
-          <div class="col-lg-6">
-            <img src="img/about.jpg" class="img-fluid" alt="">
-          </div>
-          <div class="col-lg-6 pt-4 pt-lg-0">
-            <h3>Voluptatem dignissimos provident quasi corporis voluptates sit assumenda.</h3>
+          <div>
+            <h3>MAGEODATA</h3>
             <p class="fst-italic">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-              magna aliqua.
+              Géoportail des donnnées ouvertes du Maroc exposant, en accès libre et gratuit, les données publiées sur le Portail National de l'Open Data en utilisant une approche cartographique pour faciliter la visualisation et l’exploitation de ces données.
+            </p>
+            <p>
+              Concevoir et partager des cartes sur internet sont des enjeux essentiels pour le secteur de la cartographie qui doit aujourd’hui faire face aux évolutions majeures des techniques de Web Mapping.
+              La démarche suivie pour la réalisation de ce géoportail :
             </p>
             <ul>
-              <li><i class="bi bi-check2-circle"></i> Ullamco laboris nisi ut aliquip ex ea commodo consequat.</li>
-              <li><i class="bi bi-check2-circle"></i> Duis aute irure dolor in reprehenderit in voluptate velit.</li>
-              <li><i class="bi bi-check2-circle"></i> Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate trideta storacalaperda mastiro dolore eu fugiat nulla pariatur.</li>
+              <li><i class="bi bi-check2-circle"></i> Récupération des données ouvertes depuis le Portail National de l'Open Data du Maroc</li>
+              <li><i class="bi bi-check2-circle"></i> Nettoyage, préparation et transformation des données récupérées</li>
+              <li><i class="bi bi-check2-circle"></i> Chargement des données dans une base de données NoSQL</li>
+              <li><i class="bi bi-check2-circle"></i> Cartographie des données selon leurs thèmes</li>
             </ul>
             <p>
-              Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-              velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-              culpa qui officia deserunt mollit anim id est laborum
+              Ainsi, ce travail explore cette nouvelle ère de la cartographie et présente la manière de créer et distribuer des cartes en utilisant Leaflet comme outil gratuit de Cartographie Internet.
             </p>
           </div>
         </div>
 
       </div>
-    </section><!-- End About Section -->
+    </section>
 
-    <!-- ======= Facts Section ======= -->
     <section class="facts section-bg" data-aos="fade-up">
       <div class="container">
 
         <div class="row counters">
 
           <div class="col-lg-3 col-6 text-center">
-            <span data-purecounter-start="0" data-purecounter-end="232" data-purecounter-duration="1" class="purecounter"></span>
-            <p>Clients</p>
+            <span data-purecounter-start="0" data-purecounter-end="4" data-purecounter-duration="1" class="purecounter"></span>
+            <p>Thèmes</p>
           </div>
 
           <div class="col-lg-3 col-6 text-center">
-            <span data-purecounter-start="0" data-purecounter-end="521" data-purecounter-duration="1" class="purecounter"></span>
-            <p>Projects</p>
+            <span data-purecounter-start="0" data-purecounter-end="2" data-purecounter-duration="1" class="purecounter"></span>
+            <p>Bases de données</p>
           </div>
 
           <div class="col-lg-3 col-6 text-center">
-            <span data-purecounter-start="0" data-purecounter-end="1463" data-purecounter-duration="1" class="purecounter"></span>
-            <p>Hours Of Support</p>
+            <span data-purecounter-start="0" data-purecounter-end="14" data-purecounter-duration="1" class="purecounter"></span>
+            <p>Collections</p>
           </div>
 
           <div class="col-lg-3 col-6 text-center">
-            <span data-purecounter-start="0" data-purecounter-end="15" data-purecounter-duration="1" class="purecounter"></span>
-            <p>Hard Workers</p>
+            <span data-purecounter-start="0" data-purecounter-end="195" data-purecounter-duration="1" class="purecounter"></span>
+            <p>Documents</p>
           </div>
 
         </div>
 
       </div>
-    </section><!-- End Facts Section -->
+    </section>
 
-    <!-- ======= Our Skills Section ======= -->
     <section class="skills" data-aos="fade-up">
       <div class="container">
 
         <div class="section-title">
-          <h2>Our Skills</h2>
-          <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
+          <h2>Langages</h2>
+          <p>Ce géoportail a été développé en utilisant différents langages de programmation et de développement web.</p>
         </div>
 
         <div class="skills-content">
 
           <div class="progress">
-            <div class="progress-bar bg-success" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
-              <span class="skill">HTML <i class="val">100%</i></span>
+            <div class="progress-bar bg-success" role="progressbar" aria-valuenow="23.5" aria-valuemin="0" aria-valuemax="100">
+              <span class="skill">HTML <i class="val">23.5%</i></span>
             </div>
           </div>
 
           <div class="progress">
-            <div class="progress-bar bg-info" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100">
-              <span class="skill">CSS <i class="val">90%</i></span>
+            <div class="progress-bar bg-info" role="progressbar" aria-valuenow="38.3" aria-valuemin="0" aria-valuemax="100">
+              <span class="skill">EJS <i class="val">38.3%</i></span>
             </div>
           </div>
 
           <div class="progress">
-            <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
-              <span class="skill">JavaScript <i class="val">75%</i></span>
+            <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="19.1" aria-valuemin="0" aria-valuemax="100">
+              <span class="skill">CSS <i class="val">19.1%</i></span>
             </div>
           </div>
 
           <div class="progress">
-            <div class="progress-bar bg-danger" role="progressbar" aria-valuenow="55" aria-valuemin="0" aria-valuemax="100">
-              <span class="skill">Photoshop <i class="val">55%</i></span>
+            <div class="progress-bar bg-danger" role="progressbar" aria-valuenow="19.1" aria-valuemin="0" aria-valuemax="100">
+              <span class="skill">JavaScript <i class="val">19.1%</i></span>
             </div>
           </div>
 
         </div>
 
       </div>
-    </section><!-- End Our Skills Section -->
+    </section>
 
-    <!-- ======= Tetstimonials Section ======= -->
+    <section class="facts section-bg" data-aos="fade-up">
+      <div class="container">
+        <div class="section-title">
+          <h2>Ressources</h2>
+        </div>
+        <table class="table">
+            <tr>
+              <th scope="col" colspan="3">Backend</th>
+            </tr>
+            <tr>
+              <td rowspan="2">Serveur</td>
+              <td>Node JS</td>
+              <td>Plateforme de développement JavaScript intégrant un serveur HTTP</td>
+            </tr>
+            <tr>
+              <td>Express JS</td>
+              <td>Framework pour construire des applications web basées sur Node JS</td>
+            </tr>
+            <tr>
+              <td rowspan="2">Base de données</td>
+              <td>MongoDB</td>
+              <td>Système de gestion de base de données orienté documents et ne nécessitant pas de schéma prédéfini des données (NoSQL Database)</td>
+            </tr>
+            <tr>
+              <td>MongoDB Atlas</td>
+              <td>Service de base de données multi-cloud</td>
+            </tr>
+            <tr>
+              <th scope="col" colspan="3">Frontend</th>
+            </tr>
+            <tr>
+              <td>Embedded JavaScript (EJS)</td>
+              <td colspan="2">Bibliothèque JavaScript libre pour le traitement de modèles côté client utilisée pour appeler les pages HTML depuis Node JS</td> 
+            </tr>
+            <tr>
+              <td>jQuery</td>
+              <td colspan="2">Bibliothèque JavaScript libre et multiplateforme créée pour faciliter l'écriture de scripts côté client dans le code HTML des pages web</td> 
+            </tr>
+            <tr>
+              <td>Bootstrap</td>
+              <td colspan="2">Framework utile à la création du design (graphisme, animation et interactions avec la page dans le navigateur) de sites et d'applications web</td>
+            </tr>
+            <tr>
+              <td>Font Awesome</td>
+              <td colspan="2">Police d'écriture et outil d'icônes basée sur CSS et utilisée avec Bootstrap</td>
+            </tr>
+            <tr>
+              <td>Leaflet JS</td>
+              <td colspan="2">Bibliothèque JavaScript libre de cartographie en ligne utilisant le format GeoJSON pour les structures de données géospatiales</td>
+            </tr>
+            <tr>
+              <td>Chart JS</td>
+              <td colspan="2">Bibliothèque JavaScript libre pour la visualisation de données</td>
+            </tr>
+            <tr>
+              <td>Three JS</td>
+              <td colspan="2">Bibliothèque JavaScript libre pour créer des scènes 3D dans un navigateur web</td>
+            </tr>
+        </table>
+      </div>
+    </section>
+
     <section class="testimonials" data-aos="fade-up">
       <div class="container">
 
         <div class="section-title">
-          <h2>Tetstimonials</h2>
-          <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
+          <h2>Développeurs</h2>
         </div>
 
         <div class="testimonials-carousel swiper">
           <div class="swiper-wrapper">
             <div class="testimonial-item swiper-slide">
-              <img src="img/testimonials/testimonials-1.jpg" class="testimonial-img" alt="">
-              <h3>Saul Goodman</h3>
-              <h4>Ceo &amp; Founder</h4>
+              <img src="img/students/anass-yarroudh.jpg" class="testimonial-img" alt="">
+              <h3>Anass Yarroudh</h3>
+              <h4>Étudiant Ingénieur en Topographie</h4>
               <p>
                 <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                Proin iaculis purus consequat sem cure digni ssim donec porttitora entum suscipit rhoncus. Accusantium quam, ultricies eget id, aliquam eget nibh et. Maecen aliquam, risus at semper.
+                Sciences Géomatiques et Ingénierie Topographique à l'Institut Agronomique et Vétérinaire Hassan II
                 <i class="bx bxs-quote-alt-right quote-icon-right"></i>
               </p>
             </div>
 
             <div class="testimonial-item swiper-slide">
               <img src="img/testimonials/testimonials-2.jpg" class="testimonial-img" alt="">
-              <h3>Sara Wilsson</h3>
-              <h4>Designer</h4>
+              <h3>Hatim Mouhmil</h3>
+              <h4>Étudiant Ingénieur en Topographie</h4>
               <p>
                 <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                Export tempor illum tamen malis malis eram quae irure esse labore quem cillum quid cillum eram malis quorum velit fore eram velit sunt aliqua noster fugiat irure amet legam anim culpa.
+                Sciences Géomatiques et Ingénierie Topographique à l'Institut Agronomique et Vétérinaire Hassan II
                 <i class="bx bxs-quote-alt-right quote-icon-right"></i>
               </p>
             </div>
 
             <div class="testimonial-item swiper-slide">
-              <img src="img/testimonials/testimonials-3.jpg" class="testimonial-img" alt="">
-              <h3>Jena Karlis</h3>
-              <h4>Store Owner</h4>
+              <img src="img/testimonials/testimonials-2.jpg" class="testimonial-img" alt="">
+              <h3>Khalid El Achabi</h3>
+              <h4>Étudiant Ingénieur en Topographie</h4>
               <p>
                 <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                Enim nisi quem export duis labore cillum quae magna enim sint quorum nulla quem veniam duis minim tempor labore quem eram duis noster aute amet eram fore quis sint minim.
-                <i class="bx bxs-quote-alt-right quote-icon-right"></i>
-              </p>
-            </div>
-
-            <div class="testimonial-item swiper-slide">
-              <img src="img/testimonials/testimonials-4.jpg" class="testimonial-img" alt="">
-              <h3>Matt Brandon</h3>
-              <h4>Freelancer</h4>
-              <p>
-                <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                Fugiat enim eram quae cillum dolore dolor amet nulla culpa multos export minim fugiat minim velit minim dolor enim duis veniam ipsum anim magna sunt elit fore quem dolore labore illum veniam.
-                <i class="bx bxs-quote-alt-right quote-icon-right"></i>
-              </p>
-            </div>
-
-            <div class="testimonial-item swiper-slide">
-              <img src="img/testimonials/testimonials-5.jpg" class="testimonial-img" alt="">
-              <h3>John Larson</h3>
-              <h4>Entrepreneur</h4>
-              <p>
-                <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                Quis quorum aliqua sint quem legam fore sunt eram irure aliqua veniam tempor noster veniam enim culpa labore duis sunt culpa nulla illum cillum fugiat legam esse veniam culpa fore nisi cillum quid.
+                Sciences Géomatiques et Ingénierie Topographique à l'Institut Agronomique et Vétérinaire Hassan II
                 <i class="bx bxs-quote-alt-right quote-icon-right"></i>
               </p>
             </div>
@@ -245,75 +284,52 @@
         </div>
 
       </div>
-    </section><!-- End Ttstimonials Section -->
+    </section>
 
-  </main><!-- End #main -->
+  </main>
 
-  <!-- ======= Footer ======= -->
   <footer id="footer" data-aos="fade-up" data-aos-easing="ease-in-out" data-aos-duration="500">
-
-    <div class="footer-newsletter">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-6">
-            <h4>Our Newsletter</h4>
-            <p>Tamen quem nulla quae legam multos aute sint culpa legam noster magna</p>
-          </div>
-          <div class="col-lg-6">
-            <form action="" method="post">
-              <input type="email" name="email"><input type="submit" value="Subscribe">
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
 
     <div class="footer-top">
       <div class="container">
         <div class="row">
 
           <div class="col-lg-3 col-md-6 footer-links">
-            <h4>Useful Links</h4>
+            <h4>Liens utiles</h4>
             <ul>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Home</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">About us</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Services</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Terms of service</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Privacy policy</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="index">Accueil</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="about">À propos</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="resource">Sources de données</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="contact">Contactez-nous</a></li>
             </ul>
           </div>
 
           <div class="col-lg-3 col-md-6 footer-links">
-            <h4>Our Services</h4>
+            <h4>Thèmes</h4>
             <ul>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Web Design</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Web Development</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Product Management</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Marketing</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Graphic Design</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="superieur">Enseignement supérieur</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="scolaire">Enseignement scolaire</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="habitat">Habitat</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="demographie">Démographie</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="topographie">Topographie</a></li>
             </ul>
           </div>
 
           <div class="col-lg-3 col-md-6 footer-contact">
-            <h4>Contact Us</h4>
+            <h4>Contactez-nous</h4>
             <p>
-              A108 Adam Street <br>
-              New York, NY 535022<br>
-              United States <br><br>
-              <strong>Phone:</strong> +1 5589 55488 55<br>
-              <strong>Email:</strong> info@example.com<br>
+              Sciences Géomatiques et Ingénierie Topographique <br>
+              Institut Agronomique et Vétérinaire Hassan II<br>
+              Rabat, Maroc <br>
             </p>
 
           </div>
 
           <div class="col-lg-3 col-md-6 footer-info">
-            <h3>About Moderna</h3>
-            <p>Cras fermentum odio eu feugiat lide par naso tierra. Justo eget nada terra videa magna derita valies darta donna mare fermentum iaculis eu non diam phasellus.</p>
+            <h3>À propos de MAGEODATA</h3>
+            <p>Géoportail des données ouvertes du Royaume du Maroc conçu et mis en ligne par des étudiants ingénieurs en Topographie à l'IAV Hassan II.</p>
             <div class="social-links mt-3">
-              <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
-              <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
-              <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
-              <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+              <a href="https://github.com/Yarroudh/mageodata" class="github"><i class="bx bxl-github"></i></a>
             </div>
           </div>
 
@@ -323,19 +339,10 @@
 
     <div class="container">
       <div class="copyright">
-        &copy; Copyright <strong><span>Moderna</span></strong>. All Rights Reserved
-      </div>
-      <div class="credits">
-        <!-- All the links in the footer should remain intact. -->
-        <!-- You can delete the links only if you purchased the pro version. -->
-        <!-- Licensing information: https://bootstrapmade.com/license/ -->
-        <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/free-bootstrap-template-corporate-moderna/ -->
-        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+        &copy; Copyright <strong><span>MAGEODATA</span></strong>. Tous les droits sont réservés
       </div>
     </div>
-  </footer><!-- End Footer -->
-
-  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+  </footer>
 
   <script src="vendor/purecounter/purecounter.js"></script>
   <script src="vendor/aos/aos.js"></script>
