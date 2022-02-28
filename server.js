@@ -1,8 +1,8 @@
 // Requirements
-const express = require('express');
+const express = require('express'); 
 const app = express()
-const fs = require('fs');
-const _ = require('underscore');
+require('dotenv').config();
+
 const port = process.env.PORT || 80
 
 function addslashes (str) {
@@ -12,7 +12,7 @@ function addslashes (str) {
 
 // MongoDB Connection
 var MongoClient = require('mongodb').MongoClient;
-var url = "mongodb://m001-student:m001-mongodb-basics@sandbox-shard-00-00.hm81p.mongodb.net:27017,sandbox-shard-00-01.hm81p.mongodb.net:27017,sandbox-shard-00-02.hm81p.mongodb.net:27017/education?ssl=true&replicaSet=atlas-10d25v-shard-0&authSource=admin&retryWrites=true&w=majority";
+var url = process.env.DB_URI;
 
 // Universities GeoJSON
 var univ = String();
