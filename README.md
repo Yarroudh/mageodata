@@ -66,3 +66,12 @@ Ainsi, ce travail explore cette nouvelle ère de la cartographie et présente la
               <td colspan="2">Bibliothèque JavaScript libre pour créer des scènes 3D dans un navigateur web</td>
             </tr>
         </table>
+
+## Développeurs
+Projet de Web Mapping
+Réalisé par des étudiants ingénieurs en Topographie à l'Institut Agronomique et Vétérinaire Hassan II
+<ul>
+  <li>Anass Yarroudh</li>
+  <li>Hatim Mouhmil</li>
+  <li>Khalid El Achabi</li>
+</ul>
