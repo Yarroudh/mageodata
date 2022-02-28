@@ -1,40 +1,17 @@
-# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
-# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+name: Create envfile
 
-name: Node.js CI
-
-on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+on: [ push ]
 
 jobs:
-  build:
 
+  create-envfile:
+ 
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [12.x, 14.x, 16.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-
+ 
     steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v2
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-    
     - name: Make envfile
       uses: SpicyPizza/create-envfile@v1.3
       with:
-        envkey_DEBUG: false
-        envkey_SECRET_KEY: ${{ secrets.DB_URI }}
+        envkey_DB_URI: mongodb://m001-student:m001-mongodb-basics@sandbox-shard-00-00.hm81p.mongodb.net:27017,sandbox-shard-00-01.hm81p.mongodb.net:27017,sandbox-shard-00-02.hm81p.mongodb.net:27017/education?ssl=true&replicaSet=atlas-10d25v-shard-0&authSource=admin&retryWrites=true&w=majority
         file_name: .env
         fail_on_empty: false
-        
-    - run: npm ci
-    - run: npm run build --if-present
-    - run: npm test
