@@ -12,7 +12,7 @@ function addslashes (str) {
 
 // MongoDB Connection
 var MongoClient = require('mongodb').MongoClient;
-var url = process.env.DB_URI;
+var url = env.DB_URI;
 
 // Universities GeoJSON
 var univ = String();
