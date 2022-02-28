@@ -3,7 +3,7 @@ const express = require('express');
 const app = express()
 const fs = require('fs');
 const _ = require('underscore');
-const port = process.env.PORT || 3002
+const port = process.env.PORT || 80
 
 function addslashes (str) {
     return (str + '')
