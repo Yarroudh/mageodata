@@ -8,3 +8,4 @@ Concevoir et partager des cartes sur internet sont des enjeux essentiels pour le
   <li>Chargement des données dans une base de données NoSQL</li>
   <li>Cartographie des données selon leurs thèmes</li>
 </ul>
+Ainsi, ce travail explore cette nouvelle ère de la cartographie et présente la manière de créer et distribuer des cartes en utilisant Leaflet comme outil gratuit de Cartographie Internet.
