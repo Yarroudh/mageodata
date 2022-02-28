@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin=""/>
+        <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
+        
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+        
+        <script src="https://kit.fontawesome.com/d29293fced.js" crossorigin="anonymous"></script>
+    
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
+    
+        <link href="css/leaflet-sidebar.css" rel="stylesheet">
+        <link href="css/leaflet-sidebar.min.css" rel="stylesheet">
+        <script src="js/leaflet-sidebar.js"></script>
+        <script src="js/leaflet-sidebar.min.js"></script>
+    
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@drustack/leaflet.resetview/dist/L.Control.ResetView.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/@drustack/leaflet.resetview/dist/L.Control.ResetView.min.js"></script>
+    
+        <script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/Leaflet.fullscreen.min.js'></script>
+        <link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/leaflet.fullscreen.css' rel='stylesheet' />
+    
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js" integrity="sha512-QSkVNOCYLtj73J4hbmVoOV6KVZuMluZlioC+trLpewV8qMjsWqlIQvkn1KGX2StWvPMdWGBqim1xlC8krl1EKQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.js" integrity="sha512-Lii3WMtgA0C0qmmkdCpsG0Gjr6M0ajRyQRQSbTF6BsrVh/nhZdHpVZ76iMIPvQwz1eoXC3DmAg9K51qT5/dEVg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+        <script src="js/Leaflet.control.custom.js"></script>
+
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>MAGEODATA | Habitat</title>
+        <link href="img/favicon.png" rel="icon">
+    
+    </head>
+
+    <body style="margin: 0">
+        <div id="map" style="width: 100%; height: 660px;"></div>
+
+        <script>
+             var map = L.map('map').setView([29.2, -9], 6);
+                L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png', {
+                    attribution: '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
+                }).addTo(map);
+
+                L.control.resetView({
+                    position: "topleft",
+                    title: "Réinitialiser la vue",
+                    latlng: L.latLng([29.2, -14.2]),
+                    zoom: 6,
+                }).addTo(map);
+
+                map.addControl(new L.Control.Fullscreen({
+                    title: {
+                        'false': 'Voir en plein écran',
+                        'true': 'Quitter le mode plein écran'
+                    }
+                }));
+
+                L.control.custom({
+                    position: 'topright',
+                    content : '<button type="button" class="btn btn-default">'+
+                            '<i class="fa-solid fa-arrow-left"></i>'+
+                            '</button>',
+                    classes : 'btn-group-vertical btn-group-sm',
+                    style   :
+                    {
+                        margin: '10px',
+                        padding: '0px 0 0 0',
+                        cursor: 'pointer'
+                    },
+                    events:
+                        {
+                            click: function(data) {
+                            event.preventDefault(); 
+                            location.replace('index');
+                        }
+                    }
+                }).addTo(map);
+                
+                L.control.scale().addTo(map);
+
+                var geojson = '<%-data%>';
+                var habitat = JSON.parse(geojson);
+
+                function highlightFeature(e) {
+                    var layer = e.target;
+                    layer.setStyle({
+                        weight: 5,
+                        color: '#666',
+                        dashArray: '',
+                        fillOpacity: 0.7
+                    });
+                    if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
+                        layer.bringToFront();
+                    }
+                        info.update(layer.feature);
+                }
+
+                function resetHighlight(e) {
+                    geojsonLayer.resetStyle(e.target);
+                    info.update();
+                }
+
+                function onEachFeature(feature, layer) {
+                    layer.on({
+                        mouseover: highlightFeature,
+                        mouseout: resetHighlight
+                    });
+                }
+
+                geojsonLayer = L.geoJSON(habitat, {onEachFeature: onEachFeature, style: function(feature) {
+                    return {
+                            weight: 2,
+                            Opacity: 1,
+                            color: 'white',
+                            dasharray: '7',
+                            fillOpacity: 0.7,
+                            fillColor: getColorLoyers(feature.loyers[0].total[0].ml_2019)
+                        }
+                }});
+                geojsonLayer.addTo(map);
+
+
+                var sidebar = L.control.sidebar({
+                    autopan: true,      
+                    closeButton: true,   
+                    container: 'sidebar', 
+                    position: 'left'
+                }).addTo(map);
+
+                sidebar.addPanel({
+                        id:   'info',
+                        tab:  '<i class="fa-solid fa-circle-info"></i>',
+                        title: 'Habitat',
+                        pane: '<p style="margin-top: 20px; font-size: 15px; font-weight: bold">Données ouvertes dans le domaine de l\'éducation<p/>'+
+                            '<div class="card" style="width: 375px; font-size: 14px">'+
+                                '<ul class="list-group list-group-flush">'+
+                                    '<li class="list-group-item" id="loyers"><a href="#" class="card-link">Montants moyens de loyers</a></li>'+
+                                    '<li class="list-group-item" id="cautions"><a href="#">Montants moyens de cautions</a></li>'+
+                                    '<li class="list-group-item" id="honoraires"><a href="#">Honoraires moyennes des agents immobiliers</a></li>'+
+                                '</ul>'+
+                            '</div>'+
+                            '<p style="font-size: 12px">Source de données : <a href="https://data.gov.ma/data/fr/group/habitatation">data.gov.ma</a></p>'+
+                            
+                            '<div id="loyers-infos" class="card" style="width: 375px; display:block; margin-top: 30px">'+
+                                '<div class="card-body">'+
+                                    '<h4 class="card-title">Montants moyens des loyers</h4>'+
+                                    '<h5 class="card-subtitle mb-2 text-muted">Montants moyens des loyers établis selon le système de pondération basé sur les nouveaux ménages (SPNM) selon la région et le type d\'habitat pour la période 2001-2019</h6>'+
+                                    '<p class="card-text">Données ouvertes du Ministère de l\'Aménagement du Territoire National, de l\'Urbanisme, de l\'Habitat et de la Politique de la Ville</p>'+
+                                    '<a style="font-size: 15px; color: green" href="https://data.gov.ma/data/fr/dataset/montants-moyens-des-loyers-par-region-et-au-niveau-national-2001-2019/resource/ee58ea46-2d35-4777-a412-24f60d497659"><i class="fa-solid fa-file-excel"></i><span class="card-text" style="font-size:10px; margin-left: 7px; color: blue">Consulter les données complètes sur le Portail National de l\'Open Data</span></a>'+
+                                '</div>'+
+                            '</div>'+
+
+                            '<div id="cautions-infos" class="card" style="width: 375px; display:none; margin-top: 30px">'+
+                                '<div class="card-body">'+
+                                    '<h4 class="card-title">Montants moyens des cautions</h4>'+
+                                    '<h5 class="card-subtitle mb-2 text-muted">Montants moyens des cautions établis selon le système de pondération basé sur les nouveaux ménages (SPNM) selon la région et le type d\'habitat pour la période 2001-2019</h6>'+
+                                    '<p class="card-text">Données ouvertes du Ministère de l\'Aménagement du Territoire National, de l\'Urbanisme, de l\'Habitat et de la Politique de la Ville</p>'+
+                                    '<a style="font-size: 15px; color: green" href="https://data.gov.ma/data/fr/dataset/montants-moyens-des-cautions-par-region-et-au-niveau-national-2001-2019/resource/3fe123d0-5a87-4027-bcb1-802705f86594"><i class="fa-solid fa-file-excel"></i><span class="card-text" style="font-size:10px; margin-left: 7px; color: blue">Consulter les données complètes sur le Portail National de l\'Open Data</span></a>'+
+                                '</div>'+
+                            '</div>'+
+
+                            '<div id="honoraires-infos" class="card" style="width: 375px; display:none; margin-top: 30px">'+
+                                '<div class="card-body">'+
+                                    '<h4 class="card-title">Montants moyens des honoraires des agents immobiliers</h4>'+
+                                    '<h5 class="card-subtitle mb-2 text-muted">Montants moyens des honoraires des agents immobiliers établis selon le système de pondération basé sur les nouveaux ménages (SPNM) selon la région et le type d\'habitat pour la période 2001-2019</h6>'+
+                                    '<p class="card-text">Données ouvertes du Ministère de l\'Aménagement du Territoire National, de l\'Urbanisme, de l\'Habitat et de la Politique de la Ville</span></a></p>'+
+                                    '<a style="font-size: 15px; color: green" href="https://data.gov.ma/data/fr/dataset/montants-moyens-honoraires-des-agents-immobiliers-par-region-et-au-niveau-national-2001-2019/resource/54cf02c7-404e-4b09-94eb-f99b805bcee7"><i class="fa-solid fa-file-excel"></i><span class="card-text" style="font-size:10px; margin-left: 7px; color: blue">Consulter les données complètes sur le Portail National de l\'Open Data</span></a>'+
+                                '</div>'+
+                            '</div>'+
+
+                            '<hr style="margin-top: 30px; width: 375px;">'+
+                            '<div class="range-wrap" style="width: 375px;">'+
+                                '<label class="pull-left">Année</label>'+
+                                '<div class="range-value" id="rangeV"></div>'+
+                                '<input id="range" type="range" min="2001" max="2019" value="2019" step="1">'+
+                            '</div>'
+                        })
+                sidebar.open('info');
+
+                sidebar.addPanel({
+                        id:   'charts',
+                        tab:  '<i class="fa-solid fa-chart-line"></i>',
+                        title: 'Habitat',
+                        pane: '<p style="margin-top: 20px; font-size: 15px; font-weight: bold">Montants moyens au niveau National<p/>'+
+                            '<canvas id="moyen" style="display: block" width="400" height="400"></canvas>'
+                });
+
+                function getColorLoyers(attribut) {
+                    return attribut < 1200 ? '#fef0d9' :
+                            attribut < 1800 ? '#fdcc8a' :
+                            attribut < 2200 ? '#fc8d59' :
+                            attribut < 3000 ? '#e34a33' :
+                                            '#b30000' ;
+                }
+
+                function getColorCautions(attribut) {
+                    return attribut < 1400 ? '#ffffd4' :
+                            attribut < 2200 ? '#fed98e' :
+                            attribut < 3300 ? '#fe9929' :
+                            attribut < 4400 ? '#d95f0e' :
+                                            '#993404' ;
+                }
+
+                function getColorHonoraires(attribut) {
+                    return attribut < 700 ? '#ffffcc' :
+                            attribut < 1000 ? '#a1dab4' :
+                            attribut < 1200 ? '#41b6c4' :
+                            attribut < 1500 ? '#2c7fb8' :
+                                            '#253494' ;
+                }
+
+
+                var year = "2019";
+
+                $("#range").change(function() {
+                    year = $("#range").val();
+
+                    map.removeLayer(geojsonLayer);
+                    if ($("#loyers-infos").is(":visible")) {
+                        geojsonLayer = L.geoJSON(habitat, {onEachFeature: onEachFeature, style: styleLoyers});
+                    } else if ($("#cautions-infos").is(":visible")) {
+                        geojsonLayer = L.geoJSON(habitat, {onEachFeature: onEachFeature, style: styleCautions});
+                    } else if ($("#honoraires-infos")) {
+                        geojsonLayer = L.geoJSON(habitat, {onEachFeature: onEachFeature, style: styleHonoraires});
+                    }
+                    map.addLayer(geojsonLayer);
+                });
+
+                function styleLoyers(feature) {
+                    return {
+                        weight: 2,
+                        Opacity: 1,
+                        color: 'white',
+                        dasharray: '7',
+                        fillOpacity: 0.7,
+                        fillColor: getColorLoyers(eval("feature.loyers[0].total[0].ml_"+year))
+                    };
+                }
+                
+                function styleCautions(feature) {
+                    return {
+                        weight: 2,
+                        Opacity: 1,
+                        color: 'white',
+                        dasharray: '7',
+                        fillOpacity: 0.7,
+                        fillColor: getColorCautions(eval("feature.cautions[0].total[0].mc_"+year))
+                    };
+                }
+
+                function styleHonoraires(feature) {
+                    return {
+                        weight: 2,
+                        Opacity: 1,
+                        color: 'white',
+                        dasharray: '7',
+                        fillOpacity: 0.7,
+                        fillColor: getColorHonoraires(eval("feature.honoraires[0].total[0].mh_"+year))
+                    };
+                }
+
+                var grades = Array();
+
+                var legend = L.control({position: 'bottomright'});
+                legend.onAdd = function (map) {
+                    var div = L.DomUtil.create('div', 'info legend');
+                        grades = [1000, 1200, 1500, 2000];
+                        div.innerHTML += '<h5>Montant Moyen</h5>';
+                        for (var i = 0; i < 4; i++) {
+                        div.innerHTML +=
+                            '<i style="background:' + getColorLoyers(grades[i] + 1) + '"></i> ' +
+                            grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
+                    }
+                    return div;
+                };
+                legend.addTo(map);
+
+                var info = L.control({position : 'bottomright'});
+                info.onAdd = function (map) {
+                    this._div = L.DomUtil.create('div', 'info');
+                    this.update();
+                    return this._div;
+                };
+                info.update = function (props) {
+                    this._div.innerHTML = '<h4>Montant moyen de loyers par région</h4>' + (props ?
+                        'Région : <b>'+ props.properties.Nom_Region +
+                        ' </b><br />'+
+                        ' </b><br /><span style="font-weight: bold">Type d\'habitat</span>' +
+                        ' </b><br />Villa : ' + eval("props.loyers[0].villa[0].ml_"+year+".toFixed(2)") +
+                        ' </b><br />Appartement standing : ' + eval("props.loyers[0].aps[0].ml_"+year+".toFixed(2)") +
+                        ' </b><br />Appartement économique : ' + eval("props.loyers[0].ape[0].ml_"+year+".toFixed(2)") +
+                        ' </b><br />Maisons sur lots économiques : ' + eval("props.loyers[0].mle[0].ml_"+year+".toFixed(2)") +
+                        ' </b><br />'+
+                        ' </b><br /><span style="font-weight: bold">Montant moyen : </span>' + eval("props.loyers[0].total[0].ml_"+year+".toFixed(2)")
+                        : 'Merci de mettre le curseur sur un établissement');
+                };
+                info.addTo(map);
+
+                $("#loyers").click(function() {
+                    $('#loyers-infos').show();
+                    $('#cautions-infos').hide();
+                    $('#honoraires-infos').hide();
+
+                    map.removeLayer(geojsonLayer);
+                    geojsonLayer = L.geoJson(habitat, {onEachFeature: onEachFeature, style: styleLoyers});
+                    map.addLayer(geojsonLayer);
+
+                    legend.remove(map);
+                    legend.onAdd = function (map) {
+                        var div = L.DomUtil.create('div', 'info legend');
+                            grades = [1200, 1800, 2200, 3000];
+                            div.innerHTML += '<h5>Montant Moyen</h5>';
+                            for (var i = 0; i < 4; i++) {
+                            div.innerHTML +=
+                                '<i style="background:' + getColorLoyers(grades[i] + 1) + '"></i> ' +
+                                grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
+                        }
+                        return div;
+                    };
+                    legend.addTo(map);
+
+                    info.remove(map);
+                    info.onAdd = function (map) {
+                        this._div = L.DomUtil.create('div', 'info');
+                        this.update();
+                        return this._div;
+                    };
+                    info.update = function (props) {
+                        this._div.innerHTML = '<h4>Montant moyen de loyers par région</h4>' + (props ?
+                            'Région : <b>'+ props.properties.Nom_Region +
+                            ' </b><br />'+
+                            ' </b><br /><span style="font-weight: bold">Type d\'habitat</span>' +
+                            ' </b><br />Villa : ' + eval("props.loyers[0].villa[0].ml_"+year+".toFixed(2)") +
+                            ' </b><br />Appartement standing : ' + eval("props.loyers[0].aps[0].ml_"+year+".toFixed(2)") +
+                            ' </b><br />Appartement économique : ' + eval("props.loyers[0].ape[0].ml_"+year+".toFixed(2)") +
+                            ' </b><br />Maisons sur lots économiques : ' + eval("props.loyers[0].mle[0].ml_"+year+".toFixed(2)") +
+                            ' </b><br />'+
+                            ' </b><br /><span style="font-weight: bold">Montant moyen : </span>' + eval("props.loyers[0].total[0].ml_"+year+".toFixed(2)")
+                            : 'Merci de mettre le curseur sur un établissement');
+                    };
+                    info.addTo(map);
+
+                });
+
+                $("#cautions").click(function() {
+                    $('#loyers-infos').hide();
+                    $('#cautions-infos').show();
+                    $('#honoraires-infos').hide();
+
+                    map.removeLayer(geojsonLayer);
+                    geojsonLayer = L.geoJson(habitat, {onEachFeature: onEachFeature, style: styleCautions});
+                    map.addLayer(geojsonLayer);
+
+                    legend.remove(map);
+                    legend.onAdd = function (map) {
+                    var div = L.DomUtil.create('div', 'info legend');
+                        grades = [1400, 2200, 3300, 4400];
+                        div.innerHTML += '<h5>Montant Moyen</h5>';
+                        for (var i = 0; i < 4; i++) {
+                        div.innerHTML +=
+                            '<i style="background:' + getColorCautions(grades[i] + 1) + '"></i> ' +
+                            grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
+                        }
+                        return div;
+                    };
+                    legend.addTo(map);
+
+                    info.remove(map);
+                    info.onAdd = function (map) {
+                        this._div = L.DomUtil.create('div', 'info');
+                        this.update();
+                        return this._div;
+                    };
+                    info.update = function (props) {
+                        this._div.innerHTML = '<h4>Montant moyen de cautions par région</h4>' + (props ?
+                            'Région : <b>'+ props.properties.Nom_Region +
+                            ' </b><br />'+
+                            ' </b><br /><span style="font-weight: bold">Type d\'habitat</span>' +
+                            ' </b><br />Villa : ' + eval("props.cautions[0].villa[0].mc_"+year+".toFixed(2)") +
+                            ' </b><br />Appartement standing : ' + eval("props.cautions[0].aps[0].mc_"+year+".toFixed(2)") +
+                            ' </b><br />Appartement économique : ' + eval("props.cautions[0].ape[0].mc_"+year+".toFixed(2)") +
+                            ' </b><br />Maisons sur lots économiques : ' + eval("props.cautions[0].mle[0].mc_"+year+".toFixed(2)") +
+                            ' </b><br />'+
+                            ' </b><br /><span style="font-weight: bold">Montant moyen : </span>' + eval("props.cautions[0].total[0].mc_"+year+".toFixed(2)")
+                            : 'Merci de mettre le curseur sur un établissement');
+                    };
+                    info.addTo(map);
+                });
+
+                $("#honoraires").click(function() {
+                    $('#loyers-infos').hide();
+                    $('#cautions-infos').hide();
+                    $('#honoraires-infos').show();;
+
+                    map.removeLayer(geojsonLayer);
+                    geojsonLayer = L.geoJson(habitat, {onEachFeature: onEachFeature, style: styleHonoraires});
+                    map.addLayer(geojsonLayer);
+
+                    legend.remove(map);
+                    legend.onAdd = function (map) {
+                    var div = L.DomUtil.create('div', 'info legend');
+                        grades = [700, 1000, 1200, 1500];
+                        div.innerHTML += '<h5>Montant moyen</h5>'
+                        for (var i = 0; i < 4; i++) {
+                        div.innerHTML +=
+                            '<i style="background:' + getColorHonoraires(grades[i] + 1) + '"></i> ' +
+                            grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
+                        }
+                        return div;
+                    };
+                    legend.addTo(map);
+
+                    info.remove(map);
+                    info.onAdd = function (map) {
+                        this._div = L.DomUtil.create('div', 'info');
+                        this.update();
+                        return this._div;
+                    };
+                    info.update = function (props) {
+                        this._div.innerHTML = '<h4>Montant moyen de loyers par région</h4>' + (props ?
+                            'Région : <b>'+ props.properties.Nom_Region +
+                            ' </b><br />'+
+                            ' </b><br /><span style="font-weight: bold">Type d\'habitat</span>' +
+                            ' </b><br />Villa : ' + eval("props.honoraires[0].villa[0].mh_"+year+".toFixed(2)") +
+                            ' </b><br />Appartement standing : ' + eval("props.honoraires[0].aps[0].mh_"+year+".toFixed(2)") +
+                            ' </b><br />Appartement économique : ' + eval("props.honoraires[0].ape[0].mh_"+year+".toFixed(2)") +
+                            ' </b><br />Maisons sur lots économiques : ' + eval("props.honoraires[0].mle[0].mh_"+year+".toFixed(2)") +
+                            ' </b><br />'+
+                            ' </b><br /><span style="font-weight: bold">Montant moyen : </span>' + eval("props.honoraires[0].total[0].mh_"+year+".toFixed(2)")
+                            : 'Merci de mettre le curseur sur un établissement');
+                    };
+                    info.addTo(map);
+                });
+            </script>
+
+            <style>
+                .legend {
+                    line-height: 18px;
+                    color: #555;
+                }
+                .legend i {
+                    width: 18px;
+                    height: 18px;
+                    float: left;
+                    margin-right: 8px;
+                    opacity: 0.7;
+                }
+                .info {
+                    padding: 8px 10px;
+                    font: 14px/20px Arial, Helvetica, sans-serif;
+                    background: white;
+                    background: rgba(255,255,255,0.8);
+                    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+                    border-radius: 5px;
+                }
+                .info h4 {
+                    margin: 0 0 5px;
+                    color: #777;
+                }
+                input[type=range] {
+                    -webkit-appearance: none;
+                    margin: 20px 0;
+                    width: 100%;
+                    }
+                    input[type=range]:focus {
+                    outline: none;
+                    }
+                    input[type=range]::-webkit-slider-runnable-track {
+                    width: 100%;
+                    height: 4px;
+                    cursor: pointer;
+                    background: #03a9f4;
+                    border-radius: 25px;
+                    }
+                    input[type=range]::-webkit-slider-thumb {
+                    height: 20px;
+                    width: 20px;
+                    border-radius: 50%;
+                    background: #fff;
+                    box-shadow: 0 0 4px 0 rgba(0,0,0, 1);
+                    cursor: pointer;
+                    -webkit-appearance: none;
+                    margin-top: -8px;
+                    }
+                    input[type=range]:focus::-webkit-slider-runnable-track {
+                    background: #03a9f4;
+                    }
+                    .range-wrap{
+                    width: 500px;
+                    position: relative;
+                    }
+                    .range-value{
+                    position: absolute;
+                    top: -50%;
+                    }
+                    .range-value span{
+                    width: 30px;
+                    height: 24px;
+                    line-height: 24px;
+                    text-align: center;
+                    background: #03a9f4;
+                    color: #fff;
+                    font-size: 12px;
+                    display: block;
+                    position: absolute;
+                    left: 50%;
+                    transform: translate(-50%, 0);
+                    border-radius: 6px;
+                    }
+                    .range-value span:before{
+                    content: "";
+                    position: absolute;
+                    width: 0;
+                    height: 0;
+                    border-top: 10px solid #03a9f4;
+                    border-left: 5px solid transparent;
+                    border-right: 5px solid transparent;
+                    top: 100%;
+                    left: 50%;
+                    margin-left: -5px;
+                    margin-top: -1px;
+                    }
+            </style>
+
+            <script>
+                const
+                    range = document.getElementById('range'),
+                    rangeV = document.getElementById('rangeV'),
+                    setValue = ()=>{
+                const
+                    newValue = Number( (range.value - range.min) * 100 / (range.max - range.min) ),
+                    newPosition = 10 - (newValue * 0.2);
+                    rangeV.innerHTML = `<span>${range.value}</span>`;
+                    rangeV.style.left = `calc(${newValue}% + (${newPosition}px))`;
+                };
+                    
+                document.addEventListener("DOMContentLoaded", setValue);
+                range.addEventListener('input', setValue);
+            </script>
+
+            <script>
+                const ctx = document.getElementById('moyen').getContext('2d');
+
+                var chart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: ['2001','2002','2003','2004','2005','2006','2007','2008','2009','2010','2011','2012','2013','2014','2015','2016','2017','2018','2019'],
+                        datasets: [
+                            {
+                                label: "Montant Moyen de Loyers",
+                                data: [2165.53,2247.40,2277.97,2364.55,2461.76,2607.02,2779.06,2954.25,3047.30,3101.19,3178.45,3213.12,3267.14,3326.49,2614.04,2648.85,2687.21,2722.77,2770.50],
+                                backgroundColor: "#C0392B",
+                                borderColor: "#F2D7D5"
+                            },
+                            {
+                                label: "Montant Moyen de Cautions",
+                                data: [3079.24,3226.18,3285.78,3456.29,3630.05,3931.12,4247.93,4589.93,4800.37,4904.00,5069.88,5040.87,5155.80,5223.03,3869.15,3949.18,4016.81,4115.73,4198.63],
+                                backgroundColor: "#F39C12",
+                                borderColor: "#FDEBD0"
+                            },
+                            {
+                                label: "Montant Moyen des Honoraires",
+                                data: [1046.67,1089.62,1124.34,1174.11,1231.71,1311.93,1393.26,1485.84,1549.91,1595.62,1645.24,1641.02,1675.83,1705.23,1423.48,1447.19,1467.75,1503.21,1531.19],
+                                backgroundColor: "#2471A3",
+                                borderColor: "#D4E6F1"
+                            }
+                        ]
+                    }
+                });
+            </script>
+    </body>
+</html>

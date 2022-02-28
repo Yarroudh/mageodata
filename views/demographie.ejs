@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin=""/>
+        <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
+        
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+        <script src="https://kit.fontawesome.com/d29293fced.js" crossorigin="anonymous"></script>
+
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
+
+        <link href="css/leaflet-sidebar.css" rel="stylesheet">
+        <link href="css/leaflet-sidebar.min.css" rel="stylesheet">
+        <script src="js/leaflet-sidebar.js"></script>
+        <script src="js/leaflet-sidebar.min.js"></script>
+
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@drustack/leaflet.resetview/dist/L.Control.ResetView.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/@drustack/leaflet.resetview/dist/L.Control.ResetView.min.js"></script>
+
+        <script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/Leaflet.fullscreen.min.js'></script>
+        <link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/leaflet.fullscreen.css' rel='stylesheet' />
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js" integrity="sha512-QSkVNOCYLtj73J4hbmVoOV6KVZuMluZlioC+trLpewV8qMjsWqlIQvkn1KGX2StWvPMdWGBqim1xlC8krl1EKQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.js" integrity="sha512-Lii3WMtgA0C0qmmkdCpsG0Gjr6M0ajRyQRQSbTF6BsrVh/nhZdHpVZ76iMIPvQwz1eoXC3DmAg9K51qT5/dEVg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+        <script src="js/Leaflet.control.custom.js"></script>
+
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>MAGEODATA | Démographie</title>
+        <link href="img/favicon.png" rel="icon">
+
+    </head>
+    
+    <body style="margin: 0">
+        <div id="map" style="width: 100%; height: 660px;"></div>
+
+        <script>
+            var map = L.map('map').setView([29.2, -9], 6);
+                L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png', {
+                    attribution: '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
+                }).addTo(map);
+
+                L.control.resetView({
+                    position: "topleft",
+                    title: "Réinitialiser la vue",
+                    latlng: L.latLng([29.2, -14.2]),
+                    zoom: 6,
+                }).addTo(map);
+
+                map.addControl(new L.Control.Fullscreen({
+                    title: {
+                        'false': 'Voir en plein écran',
+                        'true': 'Quitter le mode plein écran'
+                    }
+                }));
+
+                L.control.custom({
+                    position: 'topright',
+                    content : '<button type="button" class="btn btn-default">'+
+                            '<i class="fa-solid fa-arrow-left"></i>'+
+                            '</button>',
+                    classes : 'btn-group-vertical btn-group-sm',
+                    style   :
+                    {
+                        margin: '10px',
+                        padding: '0px 0 0 0',
+                        cursor: 'pointer'
+                    },
+                    events:
+                        {
+                            click: function(data) {
+                            event.preventDefault(); 
+                            location.replace('index');
+                        }
+                    }
+                }).addTo(map);
+
+                L.control.scale().addTo(map);
+
+                var geojson = '<%-data%>';
+                var demo = JSON.parse(geojson);
+                var regions = JSON.parse('<%-regions%>');
+
+                L.geoJSON(regions, {
+                    style: areaStyle
+                }).addTo(map)
+
+                function areaStyle(){
+                    return {
+                        fillColor: 'white',
+                        weight: 0.8,
+                        opacity: 0.7,
+                        color: 'grey',
+                        fillOpacity: 0.3
+                    }
+                }
+
+                function highlightFeature(e) {
+                    var layer = e.target;
+                    layer.setStyle({
+                        weight: 3,
+                        color: '#666',
+                        dashArray: '',
+                        fillOpacity: 0.7
+                    });
+                    if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
+                        layer.bringToFront();
+                    }
+                        info.update(layer.feature);
+                }
+
+                function resetHighlight(e) {
+                    geojsonLayer.resetStyle(e.target);
+                    info.update();
+                }
+
+                function onEachFeature(feature, layer) {
+                    layer.on({
+                        mouseover: highlightFeature,
+                        mouseout: resetHighlight
+                    });
+                }
+
+                geojsonLayer = L.geoJSON(demo, {pointToLayer: function(feature,latlng) {
+                    return L.circleMarker(latlng, {
+                        weight: 1,
+                        color: 'grey',
+                        fillColor: '#2E86C1',
+                        fillOpacity: 0.8,
+                        radius: getRadius(feature.population_legale[0].population, 0.017)
+                    });   
+                    },
+                        onEachFeature : onEachFeature
+                    }
+                );
+
+                geojsonLayer.addTo(map);
+
+                var legend = L.control({position: 'bottomright'});
+                createLegend(100000,10000000, 0.017);
+
+                function getRadius(area, scale) {
+                    var radius = Math.sqrt(area/Math.PI);
+                    return radius * scale;
+                }
+
+                var sidebar = L.control.sidebar({
+                    autopan: true,      
+                    closeButton: true,   
+                    container: 'sidebar', 
+                    position: 'left'
+                }).addTo(map);
+
+                sidebar.addPanel({
+                        id:   'info',
+                        tab:  '<i class="fa-solid fa-circle-info"></i>',
+                        title: 'Démographie',
+                        pane: '<p style="margin-top: 20px; font-size: 15px; font-weight: bold">Données ouvertes dans le domaine de l\'éducation<p/>'+
+                            '<div class="card" style="width: 375px; font-size: 14px">'+
+                                '<ul class="list-group list-group-flush">'+
+                                    '<li class="list-group-item" id="legale"><a href="#" class="card-link">Population légale </a></li>'+
+                                    '<li class="list-group-item" id="urbaine"><a href="#">Population urbaine</a></li>'+
+                                    '<li class="list-group-item" id="rurale"><a href="#">Population rurale</a></li>'+
+                                '</ul>'+
+                            '</div>'+
+                            '<p style="font-size: 12px;">Source de données : <a href="https://data.gov.ma/data/fr/group/education">data.gov.ma</a></p>'+
+                            
+                            '<div id="legale-infos" class="card" style="width: 375px; display:block; margin-top: 30px">'+
+                                '<div class="card-body">'+
+                                    '<h4 class="card-title">Population légale</h4>'+
+                                    '<h5 class="card-subtitle mb-2 text-muted">Population légale du Royaume d\'après les résultats du recensement général de la population et de l\'habitat de 2014</h6>'+
+                                    '<p class="card-text">Données ouvertes du Haut Commissariat au Plan.</p>'+
+                                    '<a style="font-size: 15px; color: green" href="https://data.gov.ma/data/fr/dataset/population-legale/resource/93f5e1c7-5c65-48e9-85b2-c3762f087bd0"><i class="fa-solid fa-file-excel"></i><span class="card-text" style="font-size:10px; margin-left: 7px; color: blue">Consulter les données complètes sur le Portail National de l\'Open Data</span></a>'+
+                                '</div>'+
+                            '</div>'+
+
+                            '<div id="urbaine-infos" class="card" style="width: 375px; display:none; margin-top: 30px">'+
+                                '<div class="card-body">'+
+                                    '<h4 class="card-title">Population urbaine</h4>'+
+                                    '<h5 class="card-subtitle mb-2 text-muted">Population urbaine du Royaume d\'après les résultats du recensement général de la population et de l\'habitat de 2014</h6>'+
+                                    '<p class="card-text">Données ouvertes du Haut Commissariat au Plan.</p>'+
+                                    '<a style="font-size: 15px; color: green" href="https://data.gov.ma/data/fr/dataset/population-legale/resource/93f5e1c7-5c65-48e9-85b2-c3762f087bd0"><i class="fa-solid fa-file-excel"></i><span class="card-text" style="font-size:10px; margin-left: 7px; color: blue">Consulter les données complètes sur le Portail National de l\'Open Data</span></a>'+
+                                '</div>'+
+                            '</div>'+
+
+                            '<div id="rurale-infos" class="card" style="width: 375px; display:none; margin-top: 30px">'+
+                                '<div class="card-body">'+
+                                    '<h4 class="card-title">Population rurale</h4>'+
+                                    '<h5 class="card-subtitle mb-2 text-muted">Population rurale du Royaume d\'après les résultats du recensement général de la population et de l\'habitat de 2014</h6>'+
+                                    '<p class="card-text">Données ouvertes du Haut Commissariat au Plan.</p>'+
+                                    '<a style="font-size: 15px; color: green" href="https://data.gov.ma/data/fr/dataset/population-legale/resource/93f5e1c7-5c65-48e9-85b2-c3762f087bd0"><i class="fa-solid fa-file-excel"></i><span class="card-text" style="font-size:10px; margin-left: 7px; color: blue">Consulter les données complètes sur le Portail National de l\'Open Data</span></a>'+
+                                '</div>'+
+                            '</div>'
+                    })
+                
+                sidebar.open('info');
+
+                var grades = Array();
+
+                var info = L.control({position : 'bottomright'});
+                info.onAdd = function (map) {
+                    this._div = L.DomUtil.create('div', 'info');
+                    this.update();
+                    return this._div;
+                };
+                info.update = function (props) {
+                    this._div.innerHTML = '<h4>Population légale par région</h4>' + (props ?
+                            'Région : <b>'+ props.properties.Nom_Region + 
+                            ' </b><br />Ménages : ' + props.population_legale[0].menages +
+                            ' </b><br />Population : ' + props.population_legale[0].population +
+                            ' </b><br />Marocains : ' + props.population_legale[0].marocains +
+                            ' </b><br />Étrangers : ' + props.population_legale[0].etrangers
+                        : 'Merci de mettre le curseur sur une région');
+                };
+                info.addTo(map);
+
+                $("#legale").click(function(id) {
+                    $('#legale-infos').show();
+                    $('#urbaine-infos').hide();
+                    $('#rurale-infos').hide();
+
+                    map.removeLayer(geojsonLayer);
+                    geojsonLayer = L.geoJSON(demo, {pointToLayer: function(feature,latlng) {
+                        return L.circleMarker(latlng, {
+                            weight: 1,
+                            color: 'grey',
+                            fillColor: '#2E86C1',
+                            fillOpacity: 0.8,
+                            radius: getRadius(feature.population_legale[0].population, 0.017)
+                        });   
+                        },
+                            onEachFeature : onEachFeature
+                        }
+                    );
+                    map.addLayer(geojsonLayer);
+
+                    legend.remove(map);
+                    createLegend(100000,10000000, 0.017);
+
+                    info.remove(map);
+                    info.onAdd = function (map) {
+                        this._div = L.DomUtil.create('div', 'info');
+                        this.update();
+                        return this._div;
+                    };
+                    info.update = function (props) {
+                        this._div.innerHTML = '<h4>Population légale par région</h4>' + (props ?
+                            'Région : <b>'+ props.properties.Nom_Region + 
+                            ' </b><br />Ménages : ' + props.population_legale[0].menages +
+                            ' </b><br />Population : ' + props.population_legale[0].population +
+                            ' </b><br />Marocains : ' + props.population_legale[0].marocains +
+                            ' </b><br />Étrangers : ' + props.population_legale[0].etrangers
+                            : 'Merci de mettre le curseur sur une région');
+                    };
+                    info.addTo(map);
+
+                });
+
+                $("#urbaine").click(function(id) {
+                    $('#legale-infos').hide();
+                    $('#urbaine-infos').show();
+                    $('#rurale-infos').hide();
+
+                    map.removeLayer(geojsonLayer);
+                    geojsonLayer = L.geoJSON(demo, {pointToLayer: function(feature,latlng) {
+                        return L.circleMarker(latlng, {
+                            weight: 1,
+                            color: 'grey',
+                            fillColor: '#16A085',
+                            fillOpacity: 0.8,
+                            radius: getRadius(feature.population_urbaine[0].population, 0.017)
+                        });   
+                        },
+                            onEachFeature : onEachFeature
+                        }
+                    );
+                    map.addLayer(geojsonLayer);
+
+                    legend.remove(map);
+                    createLegend(200000,5000000, 0.017);
+
+                    info.remove(map);
+                    info.onAdd = function (map) {
+                        this._div = L.DomUtil.create('div', 'info');
+                        this.update();
+                        return this._div;
+                    };
+                    info.update = function (props) {
+                        this._div.innerHTML = '<h4>Population urbaine par région</h4>' + (props ?
+                            'Région : <b>'+ props.properties.Nom_Region + 
+                            ' </b><br />Ménages : ' + props.population_urbaine[0].menages +
+                            ' </b><br />Population : ' + props.population_urbaine[0].population +
+                            ' </b><br />Marocains : ' + props.population_urbaine[0].marocains +
+                            ' </b><br />Étrangers : ' + props.population_urbaine[0].etrangers
+                            : 'Merci de mettre le curseur sur une région');
+                    };
+                    info.addTo(map);
+                });
+
+                $("#rurale").click(function(id) {
+                    $('#legale-infos').hide();
+                    $('#urbaine-infos').hide();
+                    $('#rurale-infos').show();
+
+                    map.removeLayer(geojsonLayer);
+                    geojsonLayer = L.geoJSON(demo, {pointToLayer: function(feature,latlng) {
+                        return L.circleMarker(latlng, {
+                            weight: 1,
+                            color: 'grey',
+                            fillColor: '#CB4335',
+                            fillOpacity: 0.8,
+                            radius: getRadius(feature.population_rurale[0].population, 0.025)
+                        });   
+                        },
+                            onEachFeature : onEachFeature
+                        }
+                    );
+                    map.addLayer(geojsonLayer);
+
+                    legend.remove(map);
+                    createLegend(100000,2500000, 0.025);
+
+                    info.remove(map);
+                    info.onAdd = function (map) {
+                        this._div = L.DomUtil.create('div', 'info');
+                        this.update();
+                        return this._div;
+                    };
+                    info.update = function (props) {
+                        this._div.innerHTML = '<h4>Population rurale par région</h4>' + (props ?
+                            'Région : <b>'+ props.properties.Nom_Region + 
+                            ' </b><br />Ménages : ' + props.population_rurale[0].menages +
+                            ' </b><br />Population : ' + props.population_rurale[0].population +
+                            ' </b><br />Marocains : ' + props.population_rurale[0].marocains +
+                            ' </b><br />Étrangers : ' + props.population_rurale[0].etrangers
+                            : 'Merci de mettre le curseur sur une région');
+                    };
+                    info.addTo(map);
+                });
+
+
+                function createLegend(min, max, scale) {
+                    function roundNumber(inNumber) {
+                        return (Math.round(inNumber/10) * 10);
+                    }
+                    legend.onAdd = function() {
+                        let legendContainer = L.DomUtil.create('div', 'legend');
+                        let symbolsContainer = L.DomUtil.create('div', 'symbolsContainer');
+                        let classes = [roundNumber(min), roundNumber((max-min)/2), roundNumber(max)];
+                        let legendCircle;
+                        let lastRadius = 0;
+                        let currentRadius;
+                        let margin;
+
+                        L.DomEvent.disableClickPropagation(legendContainer);
+
+                        for (let i = 0; i<= classes.length - 1; i++) {
+                            legendCircle = L.DomUtil.create('div', 'legendCircle');
+                            currentRadius = getRadius(classes[i], scale);
+                            margin = -currentRadius - lastRadius - 2;
+                            $(legendCircle).attr("style",
+                                "width: " + (currentRadius * 2) + "px; " + 
+                                "height: " + (currentRadius * 2) + "px; " +
+                                "margin-left: " + margin + "px");
+
+                            $(legendCircle).append("<span class='legendValue'>" + classes[i] + ' <b></b>' +"</span>");
+                            $(symbolsContainer).append(legendCircle);
+                            lastRadius = currentRadius;
+                        }
+                        $(legendContainer).append(symbolsContainer);
+                        return legendContainer;
+                    };
+                    legend.addTo(map);
+                }
+        
+                sidebar.addPanel({
+                        id:   'charts',
+                        tab:  '<i class="fa-solid fa-chart-line"></i>',
+                        title: 'Démographie',
+                        pane: '<p style="margin-top: 20px; font-size: 15px; font-weight: bold">Population légale du Maroc<p/>'+
+                            '<canvas id="chart1" style="display: block" width="400" height="400"></canvas>'+
+                            '<canvas id="chart2" style="display: block" width="400" height="400"></canvas>'
+                });
+        </script>
+
+        <style>
+            .legend, .temporal-legend {
+   		        padding: 6px 10px;
+   		        background: white;
+    		    background: rgba(255,255,255,0.8);
+    		    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+   		        border-radius: 5px;
+                width: 130px
+        	}
+        	.symbolsContainer {
+            	float: left;
+                margin-left: 32px;
+        	}
+        	.legendCircle {
+             	border-radius:50%; 
+             	border: 2px solid #777; 
+        	 	display: inline-block;
+        	}
+        	.legendValue {
+            		position: absolute;
+                    font-size: 12px;
+            		right: 8px;
+        	}
+            .info {
+				padding: 8px 10px;
+				font: 14px/20px Arial, Helvetica, sans-serif;
+				background: white;
+				background: rgba(255,255,255,0.8);
+				box-shadow: 0 0 15px rgba(0,0,0,0.2);
+				border-radius: 5px;
+			}
+			.info h4 {
+				margin: 0 0 5px;
+				color: #777;
+			}
+        </style>
+
+        <script>
+            const ctx1 = document.getElementById('chart1').getContext('2d');
+            const ctx2 = document.getElementById('chart2').getContext('2d');
+
+            var chart1 = new Chart(ctx1, {
+                type: 'pie',
+                data: {
+                    labels: ['Population rurale','Population urbaine'],
+                    datasets: [
+                        {
+                            data: [13415803,20432439],
+                            backgroundColor: ["#CB4335","#16A085"]
+                        }
+                    ]
+                }
+            });
+
+            var chart2 = new Chart(ctx2, {
+                type: 'bar',
+                data: {
+                    labels: ['Ménages','Population','Étrangers', 'Marocains'],
+                    datasets: [
+                        {
+                            label: '',
+                            data: [7313806,33848242,86206,33762036],
+                            backgroundColor: "#F39C12",
+                            barThickness: 50
+                        }
+                    ]
+                }
+            });
+        </script>
+    </body>
+</html>
