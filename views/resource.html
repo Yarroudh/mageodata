@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+  <head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  
+    <title>MAGEODATA | Source de données</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+  
+    <link href="img/favicon.png" rel="icon">
+    <link href="img/apple-touch-icon.png" rel="apple-touch-icon">
+  
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Roboto:300,300i,400,400i,500,500i,700,700i&display=swap" rel="stylesheet">
+  
+    <link href="vendor/animate.css/animate.min.css" rel="stylesheet">
+    <link href="vendor/aos/aos.css" rel="stylesheet">
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+    <link href="vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+    <link href="vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+  
+    <link href="css/style.css" rel="stylesheet">
+  
+    <script src="https://kit.fontawesome.com/d29293fced.js" crossorigin="anonymous"></script>
+  
+  </head>
+
+<body>
+
+  <header id="header" class="fixed-top d-flex align-items-center ">
+    <div class="container d-flex justify-content-between align-items-center">
+
+      <div class="logo">
+        <a href="index"><img src="img/logo.png" alt="" class="img-fluid"></a>
+      </div>
+
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li><a href="index">Accueil</a></li>
+          <li class="dropdown"><a href="#"><span>Thèmes</span> <i class="bi bi-chevron-down"></i></a>
+            <ul>
+              <li class="dropdown"><a href="#"><span>Éducation</span> <i class="bi bi-chevron-down"></i></a>
+                <ul>
+                  <li><a href="scolaire">Enseignement Scolaire</a></li>
+                  <li><a href="superieur">Enseignement Supérieur</a></li>
+                </ul>
+              </li>
+              <li><a href="habitat">Habitat</a></li>
+              <li><a href="demographie">Démographie</a></li>
+              <li><a href="topographie">Topographie</a></li>
+            </ul>
+          </li>
+          <li><a href="resource" class="active">Source de données</a></li>
+          <li><a href="about">À propos</a></li>
+          <li><a href="contact">Contactez-nous</a></li>
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav>
+
+    </div>
+  </header>
+
+  <main id="main">
+
+    <section class="breadcrumbs">
+      <div class="container">
+
+        <div class="d-flex justify-content-between align-items-center">
+          <h2>Source de données</h2>
+          <ol>
+            <li><a href="index">Accueil</a></li>
+            <li>Source de données</li>
+          </ol>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="about" data-aos="fade-up">
+      <div class="container">
+        <div class="row">
+          <div>
+            <h3><a href="https://www.data.gov.ma/" style="color: black">Portail National de l'Open Data du Royaume du Maroc</a></h3>
+            <p class="fst-italic">
+              Une plateforme nationale commune de données ouvertes
+            </p>
+            <p>
+              Toutes les données présentées dans ce géoportail ont été récupérées depuis le Portail National de l'Open Data du Royaume du Maroc.
+              Les données collectées et publiées au niveau du portail proviennent principalement des administrations, établissements et entreprises publics, et collectivités territoriales :
+            </p>
+            <ul>
+              <li><i class="bi bi-check2-circle"></i> Données issues d’enquêtes / collectes</li>
+              <li><i class="bi bi-check2-circle"></i> Statistiques et indicateurs publics</li>
+              <li><i class="bi bi-check2-circle"></i> Données de localisation des infrastructures gérées par ces organismes et institutions</li>
+              <li><i class="bi bi-check2-circle"></i> Données composant les référentiels maintenus par ces organismes et institutions</li>
+            </ul>
+            <p>
+              La table suivante contient toutes les données nettoyées et cartographiées par thème :
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-bg" data-aos="fade-up">
+      <div class="container">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Thèmes</th>
+              <th scope="col">Données</th>
+              <th scope="col">Fichiers</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th rowspan="5">Éducation</th>
+              <td>Enseignement Scolaire</td>
+              <td><a href="data/education/scolaire.csv">scolaire.csv</a></td>
+            </tr>
+            <tr>
+              <td rowspan="4">Enseignement Supérieur</th>
+              <td><a href="data/education/juridique_administrative.csv">juridique_administrative.csv</a></td>
+            </tr>
+            <tr>
+              <td><a href="data/education/pedagogique.csv">pedagogique.csv</a></td>
+            </tr>
+            <tr>
+              <td><a href="data/education/scientifique_technique.csv">scientifique_technique.csv</a></td>
+            </tr>
+            <tr>
+              <td><a href="data/education/universites.csv">universite.csv</a></td>
+            </tr>
+            <tr>
+              <th rowspan="15">Habitat</th>
+              <td rowspan="5">Montants de loyers</td>
+              <td><a href="data/habitat/loyers/loyers_villa_regions.csv">loyers_villa_regions.csv</a></td>
+            </tr>
+            <tr>
+              <td><a href="data/habitat/loyers/loyers_aps_regions.csv">loyers_aps_regions.csv</a></td>
+            </tr>
+            <tr>
+              <td><a href="data/habitat/loyers/loyers_ape_regions.csv">loyers_ape_regions.csv</a></td>
+            </tr>
+            <tr>
+              <td><a href="data/habitat/loyers/loyers_mle_regions.csv">loyers_mle_regions.csv</a></td>
+            </tr>
+            <tr>
+              <td><a href="data/habitat/loyers/loyers_moyens_regions.csv">loyers_moyens_regions.csv</a></td>
+            </tr>
+            <tr>
+              <td rowspan="5">Montants de cautions</td>
+              <td><a href="data/habitat/cautions/cautions_villa_regions.csv">cautions_villa_regions.csv</a></td>
+            </tr>
+            <tr>
+              <td><a href="data/habitat/cautions/cautions_aps_regions.csv">cautions_aps_regions.csv</a></td>
+            </tr>
+            <tr>
+              <td><a href="data/habitat/cautions/cautions_ape_regions.csv">cautions_ape_regions.csv</a></td>
+            </tr>
+            <tr>
+              <td><a href="data/habitat/cautions/cautions_mle_regions.csv">cautions_mle_regions.csv</a></td>
+            </tr>
+            <tr>
+              <td><a href="data/habitat/cautions/cautions_moyens_regions.csv">cautions_moyens_regions.csv</a></td>
+            </tr>
+            <tr>
+              <td rowspan="5">Honoraires des agents immobiliers</td>
+              <td><a href="data/habitat/honoraires/honoraires_villa_regions.csv">honoraires_villa_regions.csv</a></td>
+            </tr>
+            <tr>
+              <td><a href="data/habitat/honoraires/honoraires_aps_regions.csv">honoraires_aps_regions.csv</a></td>
+            </tr>
+            <tr>
+              <td><a href="data/habitat/honoraires/honoraires_ape_regions.csv">honoraires_ape_regions.csv</a></td>
+            </tr>
+            <tr>
+              <td><a href="data/habitat/honoraires/honoraires_mle_regions.csv">honoraires_mle_regions.csv</a></td>
+            </tr>
+            <tr>
+              <td><a href="data/habitat/honoraires/honoraires_moyens_regions.csv">honoraires_moyens_regions.csv</a></td>
+            </tr>
+            <tr>
+              <th rowspan="3">Démographie</th>
+              <td>Population légale</td>
+              <td><a href="data/demographie/population_legale.csv">population_legale.csv</a></td>
+            </tr>
+            <tr>
+              <td>Population urbaine</td>
+              <td><a href="data/demographie/population_urbaine.csv">population_urbaine.csv</a></td>
+            </tr>
+            <tr>
+              <td>Population rurale</td>
+              <td><a href="data/demographie/population_rurale.csv">population_rurale.csv</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    
+
+    <section class="about" data-aos="fade-up">
+      <div class="container">
+        <div class="row">
+          <div>
+            <h3>Données géographiques</h3>
+            <p>
+              Pour cartographier les données relatives aux différents thèmes, deux couches vectorielles ont été utilisées :
+            </p>
+            <ul>
+              <li><i class="bi bi-check2-circle"></i> Découpage administrative du Maroc - Régions</li>
+              <li><i class="bi bi-check2-circle"></i> Centroïdes des régions (pour les cartes à symboles proportionnels)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-bg" data-aos="fade-up">
+      <div class="container">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Couche</th>
+              <th scope="col">Shapefile</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Découpage administrative du Maroc (Régions)</th>
+              <td><a href="data/decoupage/regions.rar">regions.rar</a></td>
+            </tr>
+            <tr>
+              <td>Centroïdes des régions</th>
+              <td><a href="data/decoupage/centroid.rar">centroid.rar</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="about" data-aos="fade-up">
+      <div class="container">
+        <div class="row">
+          <div>
+            <h3>Modèle Numérique du Terrain ASTER GDEM</h3>
+            <p>
+              Modèles Numériques de Terrain (MNT) disponibles sur internet et mis gratuitement à la disposition des utilisateurs sur la plateforme <span><a href="https://earthdata.nasa.gov/">earthdata.nasa.gov</a></span>
+            </p>
+            <ul>
+              <li><i class="bi bi-check2-circle"></i> 11 granules ont été téléchargées depuis la plateforme Earthdata pour couvrir le territoire du Maroc</li>
+              <li><i class="bi bi-check2-circle"></i> Mosaïquage des MNT récupérées sur QGIS</li>
+              <li><i class="bi bi-check2-circle"></i> Visualisation 3D avec Three JS à l'aide de l'extension Qgis2threejs</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-bg" data-aos="fade-up">
+      <div class="container">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Données</th>
+              <th scope="col">Lien de téléchargement</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Mosaïque des Modèles Numériques du Terrain</th>
+              <td><a href="data/topographie/morocco_dem.rar">morocco_dem.rar</a></td>
+            </tr>
+            <tr>
+              <td>Script de téléchargement des granules</th>
+              <td><a href="data/topographie/script.txt">script.txt</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <footer id="footer" data-aos="fade-up" data-aos-easing="ease-in-out" data-aos-duration="500">
+
+    <div class="footer-top">
+      <div class="container">
+        <div class="row">
+
+          <div class="col-lg-3 col-md-6 footer-links">
+            <h4>Liens utiles</h4>
+            <ul>
+              <li><i class="bx bx-chevron-right"></i> <a href="index">Accueil</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="about">À propos</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="resource">Sources de données</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="contact">Contactez-nous</a></li>
+            </ul>
+          </div>
+
+          <div class="col-lg-3 col-md-6 footer-links">
+            <h4>Thèmes</h4>
+            <ul>
+              <li><i class="bx bx-chevron-right"></i> <a href="superieur">Enseignement supérieur</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="scolaire">Enseignement scolaire</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="habitat">Habitat</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="demographie">Démographie</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="topographie">Topographie</a></li>
+            </ul>
+          </div>
+
+          <div class="col-lg-3 col-md-6 footer-contact">
+            <h4>Contactez-nous</h4>
+            <p>
+              Sciences Géomatiques et Ingénierie Topographique <br>
+              Institut Agronomique et Vétérinaire Hassan II<br>
+              Rabat, Maroc <br>
+            </p>
+
+          </div>
+
+          <div class="col-lg-3 col-md-6 footer-info">
+            <h3>À propos de MAGEODATA</h3>
+            <p>Géoportail des données ouvertes du Royaume du Maroc conçu et mis en ligne par des étudiants ingénieurs en Topographie à l'IAV Hassan II.</p>
+            <div class="social-links mt-3">
+              <a href="https://github.com/Yarroudh/mageodata" class="github"><i class="bx bxl-github"></i></a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="copyright">
+        &copy; Copyright <strong><span>MAGEODATA</span></strong>. Tous les droits sont réservés
+      </div>
+    </div>
+  </footer>
+
+  <script src="vendor/purecounter/purecounter.js"></script>
+  <script src="vendor/aos/aos.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="vendor/waypoints/noframework.waypoints.js"></script>
+  <script src="vendor/php-email-form/validate.js"></script>
+
+  <script src="js/main.js"></script>
+
+</body>
+
+</html>

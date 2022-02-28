@@ -252,8 +252,35 @@ app.get('/contact', (req, res) => {
     res.sendFile(`${__dirname}/views/contact.html`)
 })
 
-app.get('/education', (req, res) => {
-    res.sendFile(`${__dirname}/views/education.html`)
+// app.get('/contact', (req, res) => {
+//     res.render('contact')
+// })
+
+// app.get('/contact', (req, res) => {
+//     var name = req.body.name;
+//     var subject = req.body.subject;
+//     var email = req.body.email;
+//     var message = req.body.message;
+
+//     MongoClient.connect(url, function(err, db) {
+//         if (err) throw err;
+//         var dbo = db.db("contact");
+//         var visitor = { name: name, email: email, subject: subject, message: message };
+//         dbo.collection("visitors").insertOne(visitor, function(err, res) {
+//             if (err) throw err;
+//             req.flash('success', 'Data added successfully!');
+//             res.redirect('/contact');
+//             db.close();
+//         })
+//     })
+// })
+
+app.get('/resource', (req, res) => {
+    res.sendFile(`${__dirname}/views/resource.html`)
+})
+
+app.get('/topographie', (req, res) => {
+    res.sendFile(`${__dirname}/views/topographie.html`)
 })
 
 app.get('/superieur', (req, res) => {

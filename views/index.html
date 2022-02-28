@@ -10,7 +10,6 @@
   <meta content="" name="keywords">
 
   <link href="img/favicon.png" rel="icon">
-  <link href="img/apple-touch-icon.png" rel="apple-touch-icon">
 
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Roboto:300,300i,400,400i,500,500i,700,700i&display=swap" rel="stylesheet">
 
@@ -26,6 +25,11 @@
 
   <script src="https://kit.fontawesome.com/d29293fced.js" crossorigin="anonymous"></script>
 
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 
 <body>
@@ -41,14 +45,19 @@
         <ul>
           <li><a class="active" href="index">Accueil</a></li>
           <li class="dropdown"><a href="#"><span>Thèmes</span> <i class="bi bi-chevron-down"></i></a>
-            <ul style="width: 120px;">
-              <li><a href="#">Éducation</a></li>
-              <li><a href="#">Habitat</a></li>
-              <li><a href="#">Démographie</a></li>
-              <li><a href="#">Topographie</a></li>
+            <ul>
+              <li class="dropdown"><a href="#"><span>Éducation</span> <i class="bi bi-chevron-down"></i></a>
+                <ul>
+                  <li><a href="scolaire">Enseignement Scolaire</a></li>
+                  <li><a href="superieur">Enseignement Supérieur</a></li>
+                </ul>
+              </li>
+              <li><a href="habitat">Habitat</a></li>
+              <li><a href="demographie">Démographie</a></li>
+              <li><a href="topographie">Topographie</a></li>
             </ul>
           </li>
-          <li><a href="about">Source de données</a></li>
+          <li><a href="resource">Source de données</a></li>
           <li><a href="about">À propos</a></li>
           <li><a href="contact">Contactez-nous</a></li>
         </ul>
@@ -65,7 +74,7 @@
         <div class="carousel-container">
           <h2 class="animate__animated animate__fadeInDown">Bienvenue sur <span>MAGEODATA</span></h2>
           <p class="animate__animated animate__fadeInUp">Géoportail des donnnées ouvertes du Maroc exposant, en accès libre et gratuit, les données publiées sur le Portail National de l'Open Data en utilisant une approche cartographique pour faciliter la visualisation et l’exploitation de ces données.</p>
-          <a href="" class="btn-get-started animate__animated animate__fadeInUp">Lire la suite</a>
+          <a href="about" class="btn-get-started animate__animated animate__fadeInUp">Lire la suite</a>
         </div>
       </div>
 
@@ -73,7 +82,7 @@
         <div class="carousel-container">
           <h2 class="animate__animated animate__fadeInDown">Source des données</h2>
           <p class="animate__animated animate__fadeInUp">Les données présentées dans ce projet ont été récupérées depuis le Portail National des Données Ouvertes du Royaume du Maroc.</p>
-          <a href="" class="btn-get-started animate__animated animate__fadeInUp">En savoir plus</a>
+          <a href="resource" class="btn-get-started animate__animated animate__fadeInUp">En savoir plus</a>
         </div>
       </div>
 
@@ -97,7 +106,7 @@
           <div class="col-md-6 col-lg-3 d-flex align-items-stretch" data-aos="fade-up">
             <div class="icon-box icon-box-pink">
               <div class="icon"><i class="fa-solid fa-graduation-cap"></i></div>
-              <h4 class="title"><a href="">Éducation</a></h4>
+              <h4 class="title"><button type="button" class="btn btn-link title" style="margin: 0; padding: 0; color: black; text-decoration-line: none" data-toggle="modal" data-target="#exampleModal">Éducation</button></h4>
               <p class="description">Données ouvertes du Ministère de l’Education Nationale, du Préscolaire et des Sports</p>
             </div>
           </div>
@@ -105,7 +114,7 @@
           <div class="col-md-6 col-lg-3 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="100">
             <div class="icon-box icon-box-cyan">
               <div class="icon"><i class="fa-solid fa-building"></i></div>
-              <h4 class="title"><a href="">Habitat</a></h4>
+              <h4 class="title"><a href="habitat">Habitat</a></h4>
               <p class="description">Données ouvertes du Ministère de l'Aménagement du Territoire National, de l'Urbanisme, de l'Habitat et de la Politique de la Ville</p>
             </div>
           </div>
@@ -113,7 +122,7 @@
           <div class="col-md-6 col-lg-3 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="200">
             <div class="icon-box icon-box-green">
               <div class="icon"><i class="fa-solid fa-person"></i></div>
-              <h4 class="title"><a href="">Démographie</a></h4>
+              <h4 class="title"><a href="demographie">Démographie</a></h4>
               <p class="description">Données ouvertes du HCP sur la population légale du Royaume d'après les résultats du recensement général de la population et de l'habitat de 2014</p>
             </div>
           </div>
@@ -121,7 +130,7 @@
           <div class="col-md-6 col-lg-3 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="200">
             <div class="icon-box icon-box-blue">
               <div class="icon"><i class="fa-solid fa-layer-group"></i></div>
-              <h4 class="title"><a href="">Topographie</a></h4>
+              <h4 class="title"><a href="topographie">Topographie</a></h4>
               <p class="description">Modèle Numérique du Terrain ASTER du Maroc visualisé en 3D</p>
             </div>
           </div>
@@ -130,6 +139,21 @@
 
       </div>
     </section>
+    
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-body">
+            <h6>Merci de choisir</h6>
+            <h7 class="title"><a href="superieur" class="link-dark">Enseignement supérieur</a></h7><br>
+            <h7 class="title"><a href="scolaire" class="link-dark">Enseignement scolaire</a></h7>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <section class="why-us section-bg" data-aos="fade-up" date-aos-delay="200">
       <div class="container">
@@ -142,15 +166,15 @@
           <div class="col-lg-6 d-flex flex-column justify-content-center p-5">
 
             <div class="icon-box">
-              <div class="icon"><i class="bx bx-fingerprint"></i></div>
-              <h4 class="title"><a href="">Lorem Ipsum</a></h4>
-              <p class="description">Voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident</p>
+              <div class="icon"><i class="fa-solid fa-database"></i></div>
+              <h4 class="title">Open Data</h4>
+              <p class="description">Données ouvertes récupérées depuis le Portail National de l'Open Data du Royaume du Maroc et dont l'accès et l'usage sont laissés libres aux usagers</p>
             </div>
 
             <div class="icon-box">
-              <div class="icon"><i class="bx bx-gift"></i></div>
-              <h4 class="title"><a href="">Nemo Enim</a></h4>
-              <p class="description">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque</p>
+              <div class="icon"><i class="fa-solid fa-map-location-dot"></i></div>
+              <h4 class="title">Web Mapping</h4>
+              <p class="description">Cartes interactives conçues et mises en ligne pour faciliter la visualisation et l’exploitation des données</p>
             </div>
 
           </div>
@@ -163,101 +187,59 @@
       <div class="container">
 
         <div class="section-title">
-          <h2>Features</h2>
-          <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
+          <h2>Développement</h2>
+          <p></p>
         </div>
 
         <div class="row" data-aos="fade-up">
           <div class="col-md-5">
-            <img src="img/features-1.svg" class="img-fluid" alt="">
+            <img src="img/interactive.svg" class="img-fluid" alt="">
           </div>
           <div class="col-md-7 pt-4">
-            <h3>Voluptatem dignissimos provident quasi corporis voluptates sit assumenda.</h3>
+            <h3>Cartes interactives</h3>
             <p class="fst-italic">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-              magna aliqua.
+              Cartes interactives générées avec Leaflet JS, bibliothèque Javascript Open Source pour la cartographie Internet.
             </p>
             <ul>
-              <li><i class="bi bi-check"></i> Ullamco laboris nisi ut aliquip ex ea commodo consequat.</li>
-              <li><i class="bi bi-check"></i> Duis aute irure dolor in reprehenderit in voluptate velit.</li>
+              <li><i class="bi bi-check"></i> Leaflet fonctionne efficacement sur toutes les plateformes mobiles et desktop.</li>
+              <li><i class="bi bi-check"></i> Elle peut être étendu avec de nombreux plugins, possède une puissante API, facile à utiliser et bien documentée.</li>
             </ul>
           </div>
         </div>
 
         <div class="row" data-aos="fade-up">
           <div class="col-md-5 order-1 order-md-2">
-            <img src="img/features-2.svg" class="img-fluid" alt="">
+            <img src="img/charts.svg" class="img-fluid" alt="">
           </div>
           <div class="col-md-7 pt-5 order-2 order-md-1">
-            <h3>Corporis temporibus maiores provident</h3>
+            <h3>Visualisation des données</h3>
             <p class="fst-italic">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-              magna aliqua.
+              Graphiques simples et flexibles créés avec Chart JS, une bibliothèque Javascript Open Source pour la visualisation de données.
             </p>
             <p>
-              Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-              velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-              culpa qui officia deserunt mollit anim id est laborum
+              Chart JS permet d'afficher des graphiques en forme de courbes, de barres, de radar, de camembert, de graphe polaire et de beignets, simples à intégrer et compatibles avec tous les navigateurs récents.
             </p>
           </div>
         </div>
 
         <div class="row" data-aos="fade-up">
           <div class="col-md-5">
-            <img src="img/features-3.svg" class="img-fluid" alt="">
+            <img src="img/time.svg" class="img-fluid" alt="">
           </div>
           <div class="col-md-7 pt-5">
-            <h3>Sunt consequatur ad ut est nulla consectetur reiciendis animi voluptas</h3>
-            <p>Cupiditate placeat cupiditate placeat est ipsam culpa. Delectus quia minima quod. Sunt saepe odit aut quia voluptatem hic voluptas dolor doloremque.</p>
-            <ul>
-              <li><i class="bi bi-check"></i> Ullamco laboris nisi ut aliquip ex ea commodo consequat.</li>
-              <li><i class="bi bi-check"></i> Duis aute irure dolor in reprehenderit in voluptate velit.</li>
-              <li><i class="bi bi-check"></i> Facilis ut et voluptatem aperiam. Autem soluta ad fugiat.</li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="row" data-aos="fade-up">
-          <div class="col-md-5 order-1 order-md-2">
-            <img src="img/features-4.svg" class="img-fluid" alt="">
-          </div>
-          <div class="col-md-7 pt-5 order-2 order-md-1">
-            <h3>Quas et necessitatibus eaque impedit ipsum animi consequatur incidunt in</h3>
-            <p class="fst-italic">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-              magna aliqua.
-            </p>
+            <h3>Séries temporelles</h3>
+            <p class="fst-italic">Évolution des données relatives aux différents thèmes au cours du temps (Données ouvertes sur l'Habitat pour le moment).</p>
             <p>
-              Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-              velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-              culpa qui officia deserunt mollit anim id est laborum
+              Récupération des données temporelles depuis une base de données NoSQL et leur cartographie avec Leaflet JS et jQuery.
             </p>
           </div>
         </div>
 
       </div>
-    </section><!-- End Features Section -->
+    </section>
+  </main>
 
-  </main><!-- End #main -->
-
-  <!-- ======= Footer ======= -->
   <footer id="footer" data-aos="fade-up" data-aos-easing="ease-in-out" data-aos-duration="500">
-
-    <div class="footer-newsletter">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-6">
-            <h4>Nos Newsletters</h4>
-            <p>Renseigner votre mail pour recevoir nos newsletters</p>
-          </div>
-          <div class="col-lg-6">
-            <form action="" method="post">
-              <input type="email" name="email"><input type="submit" value="S'inscrire">
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
 
     <div class="footer-top">
       <div class="container">
@@ -268,7 +250,7 @@
             <ul>
               <li><i class="bx bx-chevron-right"></i> <a href="index">Accueil</a></li>
               <li><i class="bx bx-chevron-right"></i> <a href="about">À propos</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="data">Sources de données</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="resource">Sources de données</a></li>
               <li><i class="bx bx-chevron-right"></i> <a href="contact">Contactez-nous</a></li>
             </ul>
           </div>
@@ -276,21 +258,20 @@
           <div class="col-lg-3 col-md-6 footer-links">
             <h4>Thèmes</h4>
             <ul>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Éducation</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="superieur">Enseignement supérieur</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="scolaire">Enseignement scolaire</a></li>
               <li><i class="bx bx-chevron-right"></i> <a href="habitat">Habitat</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Démographie</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Topographie</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="demographie">Démographie</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="topographie">Topographie</a></li>
             </ul>
           </div>
 
           <div class="col-lg-3 col-md-6 footer-contact">
             <h4>Contactez-nous</h4>
             <p>
-              A108 Adam Street <br>
-              New York, NY 535022<br>
-              United States <br><br>
-              <strong>Phone:</strong> +1 5589 55488 55<br>
-              <strong>Email:</strong> info@example.com<br>
+              Sciences Géomatiques et Ingénierie Topographique <br>
+              Institut Agronomique et Vétérinaire Hassan II<br>
+              Rabat, Maroc <br>
             </p>
 
           </div>
@@ -299,10 +280,7 @@
             <h3>À propos de MAGEODATA</h3>
             <p>Géoportail des données ouvertes du Royaume du Maroc conçu et mis en ligne par des étudiants ingénieurs en Topographie à l'IAV Hassan II.</p>
             <div class="social-links mt-3">
-              <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
-              <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
-              <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
-              <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+              <a href="https://github.com/Yarroudh/mageodata" class="github"><i class="bx bxl-github"></i></a>
             </div>
           </div>
 
