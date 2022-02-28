@@ -68,8 +68,8 @@ Ainsi, ce travail explore cette nouvelle ère de la cartographie et présente la
         </table>
 
 ## Développeurs
-Projet de Web Mapping
-Réalisé par des étudiants ingénieurs en Topographie à l'Institut Agronomique et Vétérinaire Hassan II
+Projet de cartographie internet
+Réalisé par des étudiants en troisième année de la filière de formation en Sciences Géomatiques et Ingénierie Topogaphique à l'Institut Agronomique et Vétérinaire Hassan II :
 <ul>
   <li>Anass Yarroudh</li>
   <li>Hatim Mouhmil</li>
