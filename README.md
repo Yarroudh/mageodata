@@ -76,22 +76,3 @@ Réalisé par des étudiants en troisième année de la filière de formation en
   <li>Hatim Mouhmil</li>
   <li>Khalid El Achabi</li>
 </ul>
-
-<table class="table">
-          <thead>
-            <tr>
-              <th scope="col">Couche</th>
-              <th scope="col">Shapefile</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Découpage administrative du Maroc (Régions)</th>
-              <td><a href="data/decoupage/regions.rar">regions.rar</a></td>
-            </tr>
-            <tr>
-              <td>Centroïdes des régions</th>
-              <td><a href="data/decoupage/centroid.rar">centroid.rar</a></td>
-            </tr>
-          </tbody>
-        </table>
