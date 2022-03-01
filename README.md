@@ -80,91 +80,18 @@ Réalisé par des étudiants en troisième année de la filière de formation en
 <table class="table">
           <thead>
             <tr>
-              <th scope="col">Thèmes</th>
-              <th scope="col">Données</th>
-              <th scope="col">Fichiers</th>
+              <th scope="col">Couche</th>
+              <th scope="col">Shapefile</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <th rowspan="5">Éducation</th>
-              <td>Enseignement Scolaire</td>
-              <td><a href="data/education/scolaire.csv">scolaire.csv</a></td>
+              <td>Découpage administrative du Maroc (Régions)</th>
+              <td><a href="data/decoupage/regions.rar">regions.rar</a></td>
             </tr>
             <tr>
-              <td rowspan="4">Enseignement Supérieur</th>
-              <td><a href="data/education/juridique_administrative.csv">juridique_administrative.csv</a></td>
-            </tr>
-            <tr>
-              <td><a href="data/education/pedagogique.csv">pedagogique.csv</a></td>
-            </tr>
-            <tr>
-              <td><a href="data/education/scientifique_technique.csv">scientifique_technique.csv</a></td>
-            </tr>
-            <tr>
-              <td><a href="data/education/universites.csv">universite.csv</a></td>
-            </tr>
-            <tr>
-              <th rowspan="15">Habitat</th>
-              <td rowspan="5">Montants de loyers</td>
-              <td><a href="data/habitat/loyers/loyers_villa_regions.csv">loyers_villa_regions.csv</a></td>
-            </tr>
-            <tr>
-              <td><a href="data/habitat/loyers/loyers_aps_regions.csv">loyers_aps_regions.csv</a></td>
-            </tr>
-            <tr>
-              <td><a href="data/habitat/loyers/loyers_ape_regions.csv">loyers_ape_regions.csv</a></td>
-            </tr>
-            <tr>
-              <td><a href="data/habitat/loyers/loyers_mle_regions.csv">loyers_mle_regions.csv</a></td>
-            </tr>
-            <tr>
-              <td><a href="data/habitat/loyers/loyers_moyens_regions.csv">loyers_moyens_regions.csv</a></td>
-            </tr>
-            <tr>
-              <td rowspan="5">Montants de cautions</td>
-              <td><a href="data/habitat/cautions/cautions_villa_regions.csv">cautions_villa_regions.csv</a></td>
-            </tr>
-            <tr>
-              <td><a href="data/habitat/cautions/cautions_aps_regions.csv">cautions_aps_regions.csv</a></td>
-            </tr>
-            <tr>
-              <td><a href="data/habitat/cautions/cautions_ape_regions.csv">cautions_ape_regions.csv</a></td>
-            </tr>
-            <tr>
-              <td><a href="data/habitat/cautions/cautions_mle_regions.csv">cautions_mle_regions.csv</a></td>
-            </tr>
-            <tr>
-              <td><a href="data/habitat/cautions/cautions_moyens_regions.csv">cautions_moyens_regions.csv</a></td>
-            </tr>
-            <tr>
-              <td rowspan="5">Honoraires des agents immobiliers</td>
-              <td><a href="data/habitat/honoraires/honoraires_villa_regions.csv">honoraires_villa_regions.csv</a></td>
-            </tr>
-            <tr>
-              <td><a href="data/habitat/honoraires/honoraires_aps_regions.csv">honoraires_aps_regions.csv</a></td>
-            </tr>
-            <tr>
-              <td><a href="data/habitat/honoraires/honoraires_ape_regions.csv">honoraires_ape_regions.csv</a></td>
-            </tr>
-            <tr>
-              <td><a href="data/habitat/honoraires/honoraires_mle_regions.csv">honoraires_mle_regions.csv</a></td>
-            </tr>
-            <tr>
-              <td><a href="data/habitat/honoraires/honoraires_moyens_regions.csv">honoraires_moyens_regions.csv</a></td>
-            </tr>
-            <tr>
-              <th rowspan="3">Démographie</th>
-              <td>Population légale</td>
-              <td><a href="data/demographie/population_legale.csv">population_legale.csv</a></td>
-            </tr>
-            <tr>
-              <td>Population urbaine</td>
-              <td><a href="data/demographie/population_urbaine.csv">population_urbaine.csv</a></td>
-            </tr>
-            <tr>
-              <td>Population rurale</td>
-              <td><a href="data/demographie/population_rurale.csv">population_rurale.csv</a></td>
+              <td>Centroïdes des régions</th>
+              <td><a href="data/decoupage/centroid.rar">centroid.rar</a></td>
             </tr>
           </tbody>
         </table>
